@@ -606,7 +606,7 @@ export async function getRelatedGames(game: Game, limit: number = 8): Promise<Ga
   
   // Score games based on similarity
   const scoredGames = games
-    .filter(g => g.id !== game.id)
+    .filter(g => g.slug !== game.slug)
     .map(g => {
       let score = 0;
       
