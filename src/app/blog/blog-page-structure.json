@@ -1,0 +1,107 @@
+{
+  "metadata": {
+    "title": "Gaming Blog - Latest News & Reviews | GameSite",
+    "description": "Stay updated with the latest gaming news, reviews, and guides",
+    "keywords": ["gaming blog", "game reviews", "gaming news", "game guides"]
+  },
+  "page": {
+    "title": "Gaming Blog",
+    "subtitle": "Latest news, reviews, and insights from the gaming world",
+    "showBreadcrumb": true,
+    "showSearch": true
+  },
+  "sections": {
+    "pageHeader": {
+      "enabled": true,
+      "order": 1,
+      "showTitle": true,
+      "showSubtitle": true,
+      "showSearch": true,
+      "backgroundType": "gradient"
+    },
+    "featuredPosts": {
+      "enabled": true,
+      "order": 2,
+      "title": "Featured Articles",
+      "maxPosts": 3,
+      "layout": "featured",
+      "showExcerpt": true,
+      "showAuthor": true,
+      "showDate": true
+    },
+    "categoryFilter": {
+      "enabled": true,
+      "order": 3,
+      "showAllCategories": true,
+      "layout": "horizontal"
+    },
+    "recentPosts": {
+      "enabled": true,
+      "order": 4,
+      "title": "Recent Articles",
+      "layout": "grid",
+      "postsPerPage": 9,
+      "showExcerpt": true,
+      "showAuthor": true,
+      "showDate": true,
+      "showReadTime": true
+    },
+    "sidebar": {
+      "enabled": true,
+      "order": 5,
+      "position": "right",
+      "components": {
+        "popularPosts": {
+          "enabled": true,
+          "title": "Popular Posts",
+          "maxPosts": 5
+        },
+        "categories": {
+          "enabled": true,
+          "title": "Categories",
+          "showCount": true
+        },
+        "newsletter": {
+          "enabled": true,
+          "title": "Stay Updated",
+          "description": "Get the latest gaming news"
+        },
+        "tags": {
+          "enabled": true,
+          "title": "Popular Tags",
+          "maxTags": 20
+        }
+      }
+    },
+    "newsletter": {
+      "enabled": true,
+      "order": 6,
+      "title": "Never Miss an Update",
+      "subtitle": "Subscribe to our newsletter for the latest gaming news and reviews",
+      "showBenefits": true,
+      "backgroundType": "colored"
+    }
+  },
+  "filters": {
+    "categories": {
+      "enabled": true,
+      "defaultValue": "all",
+      "options": ["Technology", "Reviews", "Development", "Industry", "Guides"]
+    },
+    "sorting": {
+      "enabled": true,
+      "options": ["newest", "popular", "oldest"],
+      "defaultValue": "newest"
+    },
+    "search": {
+      "enabled": true,
+      "placeholder": "Search articles...",
+      "showSuggestions": true
+    }
+  },
+  "pagination": {
+    "enabled": true,
+    "type": "pagination",
+    "itemsPerPage": 9
+  }
+} 

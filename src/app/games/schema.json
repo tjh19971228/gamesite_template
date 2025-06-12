@@ -1,0 +1,12 @@
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "All Games - Italian Brainrot Games",
+  "description": "Browse our complete collection of free online games. Find action, puzzle, strategy, racing and more games to play instantly.",
+  "url": "https://italianbrainrot-games.github.io/games",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Italian Brainrot Games",
+    "url": "https://italianbrainrot-games.github.io"
+  }
+} 

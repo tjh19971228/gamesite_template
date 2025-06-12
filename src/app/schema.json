@@ -1,0 +1,24 @@
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Italian Brainrot Games",
+  "url": "https://italianbrainrot-games.github.io",
+  "description": "Games? Check. Italian Brainrot memes? Double check. Blogs you never knew you needed? Oh yeah. Dive in now for free games and brainrot-fueled chaos.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://italianbrainrot-games.github.io/search?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Italian Brainrot Games",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://italianbrainrot-games.github.io/images/logo.png"
+    }
+  },
+  "sameAs": [
+    "https://twitter.com/Italian Brainrot Games",
+    "https://facebook.com/Italian Brainrot Games"
+  ]
+} 

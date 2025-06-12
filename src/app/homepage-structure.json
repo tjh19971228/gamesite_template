@@ -1,0 +1,85 @@
+{
+  "hero": {
+    "enabled": true,
+    "order": 1,
+    "props": {
+      "title": "Discover Amazing Games",
+      "subtitle": "Play the best online games for free",
+      "description": "Join millions of players worldwide and experience the most exciting online games. No downloads required - start playing instantly!",
+      "height": "lg",
+      "showVideo": false,
+      "backgroundImage": "https://picsum.photos/seed/hero/1920/1080",
+      "ctaButtons": [
+        {
+          "text": "Play Now",
+          "href": "/games",
+          "variant": "primary",
+          "size": "lg"
+        },
+        {
+          "text": "Browse Games",
+          "href": "/categories",
+          "variant": "outline",
+          "size": "lg"
+        }
+      ]
+    }
+  },
+  "newGames": {
+    "enabled": true,
+    "order": 2,
+    "props": {
+      "title": "New Releases",
+      "subtitle": "Latest games added to our collection",
+      "maxItems": 8,
+      "columns": 4,
+      "showTags": true,
+      "layout": "grid"
+    }
+  },
+  "hotRanking": {
+    "enabled": true,
+    "order": 3,
+    "props": {
+      "title": "Top Games",
+      "subtitle": "Most popular games this week",
+      "maxItems": 10,
+      "showTrend": true,
+      "showStats": true,
+      "layout": "list"
+    }
+  },
+  "categoryNav": {
+    "enabled": true,
+    "order": 4,
+    "props": {
+      "title": "Browse by Category",
+      "subtitle": "Find your favorite game type",
+      "layout": "grid",
+      "showCount": true,
+      "columns": 5
+    }
+  },
+  "blogsEntry": {
+    "enabled": true,
+    "order": 5,
+    "props": {
+      "title": "Latest News & Guides",
+      "subtitle": "Stay updated with game news and tips",
+      "maxItems": 3,
+      "layout": "card",
+      "showExcerpt": true
+    }
+  },
+  "featuredContent": {
+    "enabled": true,
+    "order": 6,
+    "props": {
+      "title": "Featured Games",
+      "subtitle": "Handpicked games for you",
+      "maxItems": 6,
+      "layout": "featured",
+      "showDescription": true
+    }
+  }
+} 

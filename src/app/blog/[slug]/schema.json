@@ -1,0 +1,25 @@
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "",
+  "description": "",
+  "datePublished": "",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": ""
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Italian Brainrot Games",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://italianbrainrot-games.github.io/images/logo.png"
+    }
+  },
+  "image": "",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": ""
+  }
+} 

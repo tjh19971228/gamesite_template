@@ -1,0 +1,12 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Game News & Guides - Italian Brainrot Games Blog",
+  "description": "Read the latest game news, reviews, tips and guides. Stay updated with the gaming world.",
+  "url": "https://italianbrainrot-games.github.io/blog",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Italian Brainrot Games",
+    "url": "https://italianbrainrot-games.github.io"
+  }
+} 

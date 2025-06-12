@@ -1,0 +1,95 @@
+{
+  "metadata": {
+    "title": "Search Results - GameSite",
+    "description": "Search for games, articles, and more on GameSite",
+    "keywords": ["search", "find games", "game search", "article search"]
+  },
+  "page": {
+    "title": "Search",
+    "subtitle": "Find games, articles, and more",
+    "showBreadcrumb": true,
+    "showSearchForm": true
+  },
+  "sections": {
+    "pageHeader": {
+      "enabled": true,
+      "order": 1,
+      "showTitle": true,
+      "showSubtitle": true,
+      "showSearchForm": true,
+      "backgroundType": "gradient"
+    },
+    "searchFilters": {
+      "enabled": true,
+      "order": 2,
+      "showContentType": true,
+      "showCategories": true,
+      "showDateFilter": true,
+      "showSorting": true
+    },
+    "searchResults": {
+      "enabled": true,
+      "order": 3,
+      "showResultCount": true,
+      "showTabs": true,
+      "resultsPerPage": 12,
+      "tabs": ["all", "games", "articles"]
+    },
+    "popularSearches": {
+      "enabled": true,
+      "order": 4,
+      "title": "Popular Searches",
+      "maxItems": 8,
+      "showOnEmptyResults": true
+    },
+    "browseCategories": {
+      "enabled": true,
+      "order": 5,
+      "title": "Browse by Category",
+      "showOnEmptyResults": true,
+      "maxCategories": 6
+    },
+    "noResults": {
+      "enabled": true,
+      "order": 6,
+      "title": "No Results Found",
+      "subtitle": "Try adjusting your search terms or browse our categories",
+      "showSuggestions": true,
+      "showPopularContent": true
+    }
+  },
+  "search": {
+    "placeholder": "Search games, articles, categories...",
+    "showSuggestions": true,
+    "showRecentSearches": true,
+    "maxSuggestions": 5,
+    "enableAutoComplete": true
+  },
+  "filters": {
+    "contentType": {
+      "enabled": true,
+      "options": ["all", "games", "articles"],
+      "defaultValue": "all"
+    },
+    "categories": {
+      "enabled": true,
+      "showAllCategories": true
+    },
+    "sorting": {
+      "enabled": true,
+      "options": ["relevance", "newest", "popular", "rating"],
+      "defaultValue": "relevance"
+    },
+    "dateRange": {
+      "enabled": true,
+      "options": ["anytime", "pastWeek", "pastMonth", "pastYear"],
+      "defaultValue": "anytime"
+    }
+  },
+  "results": {
+    "gamesLayout": "grid",
+    "articlesLayout": "list",
+    "showPagination": true,
+    "itemsPerPage": 12
+  }
+} 

@@ -1,0 +1,52 @@
+{
+  "metadata": {
+    "title": "{gameTitle} - Free Online Game | GameSite",
+    "description": "Play {gameTitle} online for free. No downloads required!",
+    "keywords": ["{gameTitle}", "free game", "online game", "browser game", "{gameCategory}"]
+  },
+  "page": {
+    "title": "{gameTitle}",
+    "showBreadcrumb": true
+  },
+  "sections": {
+    "gameHero": {
+      "enabled": true,
+      "order": 1,
+      "backgroundType": "gradient"
+    },
+    "gameInfo": {
+      "enabled": true,
+      "order": 2,
+      "showTags": true,
+      "showCategory": true,
+      "showStats": true
+    },
+    "gameDescription": {
+      "enabled": true,
+      "order": 3
+    },
+    "gameFeatures": {
+      "enabled": true,
+      "order": 4
+    },
+    "gameControls": {
+      "enabled": true,
+      "order": 5
+    },
+    "screenshotGallery": {
+      "enabled": true,
+      "order": 6,
+      "maxImages": 5
+    },
+    "relatedGames": {
+      "enabled": true,
+      "order": 7,
+      "title": "Similar Games",
+      "maxItems": 4
+    },
+    "commentSection": {
+      "enabled": false,
+      "order": 8
+    }
+  }
+} 

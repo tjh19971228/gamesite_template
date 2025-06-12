@@ -1,0 +1,83 @@
+{
+  "metadata": {
+    "title": "Free Online Games - GameSite",
+    "description": "Play the best free online games. No downloads required!",
+    "keywords": ["free games", "online games", "browser games", "no download"]
+  },
+  "page": {
+    "title": "Game Collection",
+    "subtitle": "Discover amazing games to play for free",
+    "showBreadcrumb": true,
+    "showFilters": true,
+    "showSorting": true
+  },
+  "sections": {
+    "pageHeader": {
+      "enabled": true,
+      "order": 1,
+      "showTitle": true,
+      "showSubtitle": true,
+      "showStats": true,
+      "backgroundType": "gradient"
+    },
+    "filterBar": {
+      "enabled": true,
+      "order": 2,
+      "showCategoryFilter": true,
+      "showSortOptions": true,
+      "showSearch": true,
+      "showViewToggle": true
+    },
+    "categoryNavigation": {
+      "enabled": true,
+      "order": 3,
+      "layout": "horizontal",
+      "maxVisible": 8,
+      "showAllButton": true
+    },
+    "gameGrid": {
+      "enabled": true,
+      "order": 4,
+      "layout": "grid",
+      "columns": 4,
+      "gap": "6",
+      "showLoadMore": true,
+      "gamesPerPage": 12
+    },
+    "popularGames": {
+      "enabled": true,
+      "order": 5,
+      "title": "Popular This Week",
+      "maxGames": 8,
+      "layout": "grid"
+    },
+    "recentlyAdded": {
+      "enabled": true,
+      "order": 6,
+      "title": "Recently Added",
+      "maxGames": 6,
+      "layout": "grid"
+    }
+  },
+  "filters": {
+    "categories": {
+      "enabled": true,
+      "defaultValue": "all"
+    },
+    "sorting": {
+      "enabled": true,
+      "options": ["newest", "popular", "rating", "name"],
+      "defaultValue": "newest"
+    },
+    "search": {
+      "enabled": true,
+      "placeholder": "Search games...",
+      "showSuggestions": true
+    }
+  },
+  "pagination": {
+    "enabled": true,
+    "type": "loadMore",
+    "itemsPerPage": 12
+  }
+} 

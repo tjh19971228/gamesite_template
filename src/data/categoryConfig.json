@@ -1,0 +1,59 @@
+{
+  "categoryAttributes": {
+    "Puzzle Game": {
+      "icon": "🧩",
+      "color": "#8B5CF6",
+      "description": "Mind-bending puzzles and brain teasers to challenge your logical thinking"
+    },
+    "Adventure": {
+      "icon": "🗺️",
+      "color": "#059669",
+      "description": "Explore mysterious worlds and embark on thrilling journeys"
+    },
+    "Sports": {
+      "icon": "⚽",
+      "color": "#DC2626",
+      "description": "Competitive sports games and athletic challenges"
+    },
+    "Action": {
+      "icon": "⚡",
+      "color": "#EA580C",
+      "description": "Fast-paced action games with intense gameplay"
+    },
+    "Strategy": {
+      "icon": "♟️",
+      "color": "#7C3AED",
+      "description": "Strategic thinking and tactical planning games"
+    },
+    "RPG": {
+      "icon": "🏰",
+      "color": "#BE185D",
+      "description": "Role-playing games with character development and storytelling"
+    },
+    "Simulation": {
+      "icon": "🏗️",
+      "color": "#0891B2",
+      "description": "Realistic simulations of various activities and systems"
+    },
+    "Racing": {
+      "icon": "🏎️",
+      "color": "#DC2626",
+      "description": "High-speed racing games and vehicle competitions"
+    },
+    "Arcade": {
+      "icon": "👾",
+      "color": "#9333EA",
+      "description": "Classic arcade-style games with simple controls and addictive gameplay"
+    },
+    "Educational": {
+      "icon": "📚",
+      "color": "#0D9488",
+      "description": "Learning games that combine education with entertainment"
+    }
+  },
+  "defaultAttributes": {
+    "icon": "🎮",
+    "color": "#6B7280",
+    "description": "Exciting {categoryName} games for all players"
+  }
+} 

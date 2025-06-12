@@ -1,0 +1,78 @@
+{
+  "metadata": {
+    "title": "Game Categories - Browse by Genre | GameSite",
+    "description": "Explore games by category - Action, Adventure, Puzzle, Sports and more",
+    "keywords": ["game categories", "gaming genres", "browse games", "game types"]
+  },
+  "page": {
+    "title": "Game Categories",
+    "subtitle": "Explore games by genre and find your favorites",
+    "showBreadcrumb": true,
+    "showSearch": false
+  },
+  "sections": {
+    "pageHeader": {
+      "enabled": true,
+      "order": 1,
+      "showTitle": true,
+      "showSubtitle": true,
+      "showStats": true,
+      "backgroundType": "gradient"
+    },
+    "categoryGrid": {
+      "enabled": true,
+      "order": 2,
+      "layout": "grid",
+      "columns": 3,
+      "gap": "6",
+      "showGameCount": true,
+      "showDescription": true,
+      "showPreviewGames": true,
+      "maxPreviewGames": 3
+    },
+    "popularCategories": {
+      "enabled": true,
+      "order": 3,
+      "title": "Most Popular Categories",
+      "layout": "featured",
+      "maxCategories": 6,
+      "showStats": true
+    },
+    "allCategories": {
+      "enabled": true,
+      "order": 4,
+      "title": "All Categories",
+      "layout": "list",
+      "showGameCount": true,
+      "showDescription": true,
+      "sortBy": "name"
+    },
+    "recentlyUpdated": {
+      "enabled": true,
+      "order": 5,
+      "title": "Recently Updated Categories",
+      "maxCategories": 4,
+      "showLastUpdated": true
+    }
+  },
+  "display": {
+    "layout": "grid",
+    "columns": {
+      "desktop": 3,
+      "tablet": 2,
+      "mobile": 1
+    },
+    "showIcons": true,
+    "showGameCount": true,
+    "showDescription": true,
+    "sortBy": "name",
+    "sortOrder": "asc"
+  },
+  "filters": {
+    "sorting": {
+      "enabled": true,
+      "options": ["name", "gameCount", "popularity", "recent"],
+      "defaultValue": "name"
+    }
+  }
+} 

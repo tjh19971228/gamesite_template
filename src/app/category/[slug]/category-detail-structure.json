@@ -1,0 +1,35 @@
+{
+  "metadata": {
+    "title": "{categoryName} Games - GameSite",
+    "description": "Play the best {categoryName} games online for free",
+    "keywords": ["{categoryName}", "games", "online games", "browser games"]
+  },
+  "page": {
+    "title": "{categoryName} Games",
+    "subtitle": "Discover amazing {categoryName} games to play for free",
+    "showBreadcrumb": true
+  },
+  "sections": {
+    "pageHeader": {
+      "enabled": true,
+      "order": 1,
+      "showTitle": true,
+      "showSubtitle": true,
+      "showStats": true,
+      "backgroundType": "gradient"
+    },
+    "gameGrid": {
+      "enabled": true,
+      "order": 2,
+      "columns": 4,
+      "gap": "6",
+      "showLoadMore": true
+    },
+    "relatedCategories": {
+      "enabled": true,
+      "order": 3,
+      "title": "Related Categories",
+      "maxItems": 4
+    }
+  }
+} 

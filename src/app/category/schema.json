@@ -1,0 +1,12 @@
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "",
+  "description": "",
+  "url": "",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Italian Brainrot Games",
+    "url": "https://italianbrainrot-games.github.io"
+  }
+} 

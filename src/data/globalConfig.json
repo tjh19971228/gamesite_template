@@ -1,0 +1,67 @@
+{
+  "loading": {
+    "enabled": true,
+    "type": "spinner",
+    "showProgressBar": true,
+    "showPercentage": false,
+    "backgroundColor": "rgba(255, 255, 255, 0.9)",
+    "spinnerColor": "#6366f1",
+    "progressBarColor": "#10b981",
+    "text": "Loading...",
+    "showText": true,
+    "animationType": "fade",
+    "delayMs": 200,
+    "minimumDurationMs": 800,
+    "position": "center",
+    "size": "medium",
+    "overlay": true,
+    "blurBackground": true
+  },
+  "isr": {
+    "enabled": true,
+    "revalidateTime": 3600,
+    "backgroundRevalidation": true,
+    "fallback": "blocking",
+    "pages": {
+      "home": {
+        "revalidate": 1800,
+        "enabled": true
+      },
+      "game": {
+        "revalidate": 3600,
+        "enabled": true
+      },
+      "category": {
+        "revalidate": 1800,
+        "enabled": true
+      },
+      "games": {
+        "revalidate": 900,
+        "enabled": true
+      },
+      "blog": {
+        "revalidate": 7200,
+        "enabled": true
+      }
+    },
+    "cacheHeaders": {
+      "maxAge": 86400,
+      "staleWhileRevalidate": 3600,
+      "mustRevalidate": false
+    }
+  },
+  "performance": {
+    "enableImageOptimization": true,
+    "lazyLoading": true,
+    "prefetchLinks": true,
+    "compression": {
+      "enabled": true,
+      "level": 6
+    },
+    "caching": {
+      "staticFiles": 31536000,
+      "apiResponses": 3600,
+      "images": 2592000
+    }
+  }
+} 

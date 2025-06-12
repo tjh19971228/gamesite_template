@@ -1,103 +1,172 @@
-import Image from "next/image";
+import React from 'react';
+import { Metadata } from 'next';
+import { Layout } from '@/components/layout';
+import { HeroSection } from '@/components/sections/HeroSection';
+import { GameGrid } from '@/components/sections/GameGrid';
+import { RankingList } from '@/components/sections/RankingList';
+import { CategoryNav } from '@/components/sections/CategoryNav';
+import { BlogEntry } from '@/components/sections/BlogEntry';
+import { SchemaOrg } from '@/components/SchemaOrg';
+import { getHomepageStructure, getSEOConfig } from '@/lib/config';
+import { getHomepageSchema } from '@/lib/schema';
+import { 
+  getPopularGames, 
+  getNewGames, 
+  getRecentBlogPosts,
+  getAllCategories
+} from '@/lib/data';
 
-export default function Home() {
+/**
+ * Generate metadata for homepage
+ * 首页元数据生成
+ */
+export async function generateMetadata(): Promise<Metadata> {
+  const homepageSEO = await getSEOConfig('/');
+  
+  return {
+    title: homepageSEO?.title || 'Game Site Template',
+    description: homepageSEO?.description || 'Discover and play amazing games',
+    keywords: homepageSEO?.keywords || [],
+    openGraph: {
+      title: homepageSEO?.ogTitle || homepageSEO?.title,
+      description: homepageSEO?.ogDescription || homepageSEO?.description,
+      images: homepageSEO?.ogImage ? [homepageSEO.ogImage] : [],
+    },
+    twitter: {
+      card: homepageSEO?.twitterCard || 'summary_large_image',
+    },
+  };
+}
+
+/**
+ * Homepage Component
+ * 首页组件 - JSON驱动的动态页面
+ */
+export default async function Homepage() {
+  // Load configuration
+  const structure = await getHomepageStructure();
+  const schemaData = await getHomepageSchema();
+  
+  // Helper function to check if component is enabled
+  const isEnabled = (component: boolean | { enabled: boolean; order?: number; props?: unknown } | undefined): boolean => {
+    if (typeof component === 'boolean') return component;
+    return component?.enabled ?? false;
+  };
+  
+  // Get data from JSON files
+  const newGamesData = getNewGames(8);
+  const popularGamesData = getPopularGames(6);
+  const recentBlogPosts = getRecentBlogPosts(4);
+  const categories = getAllCategories();
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <>
+      {/* 添加结构化数据 */}
+      <SchemaOrg data={schemaData} />
+      
+      <Layout>
+        {/* Hero Section */}
+        {isEnabled(structure.hero) && (
+          <HeroSection
+            title="Welcome to Game Paradise"
+            subtitle="Discover Amazing Games"
+            description="Play the best games online for free. From action-packed adventures to brain-teasing puzzles, we have something for everyone."
+            backgroundImage="https://picsum.photos/seed/hero/1920/1080"
+            ctaButtons={[
+              {
+                text: "Explore Games",
+                href: "/games",
+                variant: "primary",
+                size: "lg"
+              },
+              {
+                text: "Latest News",
+                href: "/blog",
+                variant: "outline",
+                size: "lg"
+              }
+            ]}
+            height="lg"
+            className="py-24"
+          />
+        )}
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        {/* New Games Section */}
+        {isEnabled(structure.newGames) && (
+          <div className="py-16 bg-background">
+            <div className="container mx-auto px-4">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">New Games</h2>
+                <p className="text-lg text-muted-foreground">
+                  Discover the latest games added to our collection
+                </p>
+              </div>
+              <GameGrid
+                games={newGamesData}
+                columns={4}
+                gap="6"
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Hot Ranking Section */}
+        {isEnabled(structure.hotRanking) && (
+          <div className="py-16 bg-muted/30">
+            <div className="container mx-auto px-4">
+              <RankingList
+                games={popularGamesData}
+                title="Hot Games Ranking"
+                showTrend={true}
+                showStats={true}
+                maxItems={6}
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Category Navigation */}
+        {isEnabled(structure.categoryNav) && (
+          <div className="py-16 bg-background">
+            <div className="container mx-auto px-4">
+              <CategoryNav
+                categories={categories}
+                title="Browse by Category"
+                showCounts={true}
+                layout="grid"
+                maxVisible={6}
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Blog Entry Section */}
+        {isEnabled(structure.blogsEntry) && (
+          <div className="py-16 bg-muted/30">
+            <div className="container mx-auto px-4">
+              <BlogEntry
+                posts={recentBlogPosts}
+                title="Latest Gaming News"
+                subtitle="Stay updated with the latest trends and news in gaming"
+                maxPosts={4}
+                layout="grid"
+                showAuthor={true}
+                showDate={true}
+                showExcerpt={true}
+              />
+            </div>
+          </div>
+        )}
+        
+        {/* Development Debug Info has been removed */}
+      </Layout>
+    </>
   );
 }
+
+/**
+ * ISR Configuration
+ * 从静态配置ISR设置
+ */
+export const dynamic = 'force-static';
+export const revalidate = 1800; // 30 minutes 

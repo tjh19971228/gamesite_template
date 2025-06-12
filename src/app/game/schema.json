@@ -1,0 +1,26 @@
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "",
+  "description": "",
+  "genre": "",
+  "playMode": "SinglePlayer",
+  "applicationCategory": "Game",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "",
+    "reviewCount": "",
+    "bestRating": "5",
+    "worstRating": "1"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Italian Brainrot Games"
+  }
+} 
