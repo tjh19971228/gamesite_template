@@ -254,7 +254,7 @@ export default async function CategoriesPage() {
                           <p className="text-xs font-medium text-muted-foreground mb-2">Recent Games:</p>
                           <div className="flex flex-wrap gap-1">
                             {category.recentGames.slice(0, 3).map((game) => (
-                              <Badge key={game.id} variant="outline" className="text-xs">
+                              <Badge key={game.slug} variant="outline" className="text-xs">
                                 {game.title}
                               </Badge>
                             ))}

@@ -38,15 +38,18 @@
       "order": 6,
       "maxImages": 5
     },
-    "relatedGames": {
+    "commentSection": {
       "enabled": true,
       "order": 7,
+      "title": "玩家评论",
+      "maxComments": 10,
+      "showAddComment": true
+    },
+    "relatedGames": {
+      "enabled": true,
+      "order": 8,
       "title": "Similar Games",
       "maxItems": 4
-    },
-    "commentSection": {
-      "enabled": false,
-      "order": 8
     }
   }
 } 

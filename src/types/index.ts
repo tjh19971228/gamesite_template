@@ -7,8 +7,14 @@
 // Game Related Types
 // ================================
 
+export interface Comment {
+  username: string;
+  content: string;
+  timestamp: string;
+  likes: number;
+}
+
 export interface Game {
-  id: string;
   title: string;
   slug: string;
   description: string;
@@ -28,6 +34,41 @@ export interface Game {
   language?: string[];
   fileSize?: string;
   lastUpdated?: string;
+  comments?: Comment[];
+  faqContent?: Array<{
+    question: string;
+    answer: string;
+  }>;
+  videoContent?: {
+    name: string;
+    description: string;
+    thumbnailUrl: string;
+    uploadDate: string;
+    duration: string;
+    embedUrl: string;
+    encodingFormat: string;
+    videoQuality: string;
+    width?: number;
+    height?: number;
+    genre?: string[];
+    keywords?: string[];
+    inLanguage?: string;
+    interactionStatistic?: Array<{
+      "@type": string;
+      interactionType: string;
+      userInteractionCount: number;
+    }>;
+  };
+  ratingContent?: {
+    ratingValue: number;
+    bestRating: number;
+    worstRating: number;
+    ratingCount: number;
+    reviewCount: number;
+  };
+  seo_content?: string;
+  iconUrl?: string;
+  realUrl?: string;
 }
 
 export interface GameCategory {

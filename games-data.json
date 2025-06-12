@@ -1,6 +1,5 @@
 [
     {
-        "id": "1",
         "title": "Italian Brainrot Find the Differences",
         "slug": "italian-brainrot-find-the-differences",
         "iconUrl": "https://static.catgame.top/github/1749553431269_a574cc7464b646df8d7c6bf0aab8255b-200x120.jpg",
@@ -35,14 +34,12 @@
         "comments": [
             {
                 "username": "Bean_Gamer",
-                "avatar": "https://static.catgame.top/github/1749553434944_image_1749553434583.jpeg",
                 "content": "I love this game so much, it changed the way I view life, the only reason to live is for the game to update.",
                 "timestamp": "2024-05-08T00:00:00Z",
                 "likes": 42
             },
             {
                 "username": "rxftbyfctycdbfybrdxy",
-                "avatar": "https://static.catgame.top/github/1749553436820_image_1749553436479.jpeg",
                 "content": "Such an amazing game got the password on my second try just make more levels.",
                 "timestamp": "2024-06-20T00:00:00Z",
                 "likes": 28
@@ -109,7 +106,6 @@
         }
     },
     {
-        "id": "2",
         "title": "Mystery Island Adventures",
         "slug": "mystery-island-adventures",
         "iconUrl": "https://picsum.photos/seed/island1/400/300",
@@ -142,14 +138,12 @@
         "comments": [
             {
                 "username": "IslandExplorer",
-                "avatar": "https://ui-avatars.com/api/?name=Island+Explorer&background=22c55e&color=fff",
                 "content": "The multiple endings really add replay value! I've gone through it three times and discovered new areas each time.",
                 "timestamp": "2024-04-15T00:00:00Z",
                 "likes": 37
             },
             {
                 "username": "PuzzleMaster99",
-                "avatar": "https://ui-avatars.com/api/?name=Puzzle+Master&background=3b82f6&color=fff",
                 "content": "Some of the puzzles are genuinely challenging. Had to use pen and paper for the temple sequence!",
                 "timestamp": "2024-03-28T00:00:00Z",
                 "likes": 24
@@ -205,7 +199,6 @@
         }
     },
     {
-        "id": "4",
         "title": "Soccer Champions League",
         "slug": "soccer-champions-league",
         "iconUrl": "https://picsum.photos/seed/soccer1/400/300",
@@ -238,14 +231,12 @@
         "comments": [
             {
                 "username": "SoccerFan2024",
-                "avatar": "https://ui-avatars.com/api/?name=Soccer+Fan&background=f59e0b&color=fff",
                 "content": "The team management aspect is surprisingly deep! Love how you can develop young talent over multiple seasons.",
                 "timestamp": "2024-04-22T00:00:00Z",
                 "likes": 45
             },
             {
                 "username": "CoachMike",
-                "avatar": "https://ui-avatars.com/api/?name=Coach+Mike&background=ef4444&color=fff",
                 "content": "Most realistic soccer simulation I've played in a browser game. The AI teams actually use different tactics!",
                 "timestamp": "2024-03-15T00:00:00Z",
                 "likes": 31

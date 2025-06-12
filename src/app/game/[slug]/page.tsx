@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { GamePlayer } from '@/components/game/GamePlayer';
+import { GameComments } from '@/components/game/GameComments';
 import { SchemaOrg } from '@/components/SchemaOrg';
 import { 
   getGameBySlug,
@@ -90,7 +91,7 @@ export default async function GameDetailPage({ params }: GamePageProps) {
   
   // Get related games from the same category
   const relatedGames = getGamesByCategory(category?.slug || game.category.toLowerCase().replace(/\s+/g, '-'))
-    .filter(g => g.id !== game.id)
+    .filter(g => g.slug !== game.slug)
     .slice(0, 4);
   
   // Get popular games as fallback if no related games
@@ -281,6 +282,16 @@ export default async function GameDetailPage({ params }: GamePageProps) {
                     </CardContent>
                   </Card>
                 )}
+
+                {/* Comments Section */}
+                {config.sections?.commentSection?.enabled && (
+                  <GameComments
+                    comments={game.comments || []}
+                    enabled={config.sections.commentSection.enabled}
+                    title={(config.sections.commentSection as ComponentConfig).title as string || "玩家评论"}
+                    maxComments={Number((config.sections.commentSection as ComponentConfig).maxComments) || 10}
+                  />
+                )}
               </div>
 
               {/* Sidebar */}
@@ -301,7 +312,7 @@ export default async function GameDetailPage({ params }: GamePageProps) {
                       <div className="space-y-3">
                         {recommendedGames.slice(0, 3).map((relatedGame) => (
                           <Link
-                            key={relatedGame.id}
+                            key={relatedGame.slug}
                             href={`/game/${relatedGame.slug}`}
                             className="flex gap-3 p-2 rounded-lg hover:bg-muted transition-colors"
                           >
