@@ -4,7 +4,7 @@
         "description": "Games? Check. Italian Brainrot memes? Double check. Blogs you never knew you needed? Oh yeah. Dive in now for free games and brainrot-fueled chaos. Let’s gooo!",
         "siteName": "Italian Brainrot Games",
         "shortName": "Italian Brainrot Games",
-        "url": "https://italianbrainrot-games.github.io",
+        "url": "http://localhost:3002",
         "language": "en",
         "creator": "@Italian Brainrot Games",
         "twitterUsername": "@Italian Brainrot Games",
@@ -13,7 +13,7 @@
         "keywords": "Italian brainrot, Italian brainrot blog, brainrot games, free online games, unblocked games, memes, internet culture, gaming blog"
     },
     "seo": {
-        "metadataBase": "https://italianbrainrot-games.github.io",
+        "metadataBase": "http://localhost:3002",
         "icons": {
             "icon": [
                 {
@@ -87,42 +87,6 @@
                     "media": "(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
                 }
             ]
-        },
-        "formatDetection": {
-            "telephone": false
-        },
-        "openGraph": {
-            "type": "website",
-            "images": [
-                {
-                    "url": "/images/share.png",
-                    "width": 1200,
-                    "height": 630,
-                    "alt": "Italian Brainrot Games Portal"
-                }
-            ]
-        },
-        "twitter": {
-            "card": "summary_large_image",
-            "images": [
-                "/images/share.png"
-            ]
-        },
-        "viewport": {
-            "themeColor": [
-                {
-                    "media": "(prefers-color-scheme: dark)",
-                    "color": "#000000"
-                },
-                {
-                    "media": "(prefers-color-scheme: light)",
-                    "color": "#000000"
-                }
-            ],
-            "width": "device-width",
-            "initialScale": 1,
-            "maximumScale": 1,
-            "userScalable": false
         }
     },
     "manifest": {

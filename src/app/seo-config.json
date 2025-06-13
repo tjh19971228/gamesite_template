@@ -3,10 +3,10 @@
     "title": "Free Online Games - Play Now at GameSite",
     "description": "Play thousands of free online games including action, puzzle, strategy and more. No downloads required - start playing instantly!",
     "keywords": ["free games", "online games", "browser games", "play games", "action games", "puzzle games", "strategy games"],
-    "ogImage": "https://picsum.photos/seed/homepage/1200/630",
+    "ogImage": "/images/share.png",
     "ogTitle": "Free Online Games - GameSite",
     "ogDescription": "Discover amazing free online games. Play instantly without downloads!",
-    "twitterCard": "summary_large_image",
+    "twitterCard": "/images/share.png",
     "structuredData": {
       "@context": "https://schema.org",
       "@type": "WebSite",
@@ -28,7 +28,7 @@
     "title": "All Games - Browse Our Game Collection",
     "description": "Browse our complete collection of free online games. Find action, puzzle, strategy, racing and more games to play instantly.",
     "keywords": ["all games", "game collection", "browse games", "free online games"],
-    "ogImage": "https://picsum.photos/seed/games/1200/630",
+    "ogImage": "/images/share.png",
     "structuredData": {
       "@context": "https://schema.org",
       "@type": "CollectionPage",
@@ -40,7 +40,7 @@
     "title": "Game Categories - Find Games by Type",
     "description": "Explore games by category including action, puzzle, strategy, racing, sports and more. Find your favorite game type.",
     "keywords": ["game categories", "game types", "action games", "puzzle games", "strategy games"],
-    "ogImage": "https://picsum.photos/seed/categories/1200/630",
+    "ogImage": "/images/share.png",
     "structuredData": {
       "@context": "https://schema.org",
       "@type": "CollectionPage",
@@ -52,7 +52,7 @@
     "title": "Game News & Guides - GameSite Blog",
     "description": "Read the latest game news, reviews, tips and guides. Stay updated with the gaming world.",
     "keywords": ["game news", "game guides", "game tips", "game reviews", "gaming blog"],
-    "ogImage": "https://picsum.photos/seed/blog/1200/630",
+    "ogImage": "/images/share.png",
     "structuredData": {
       "@context": "https://schema.org",
       "@type": "Blog",
