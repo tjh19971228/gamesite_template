@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { Game } from '@/types';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { getAllCategories } from '@/lib/data';
 
 interface RankingListProps {
   games: Game[];
@@ -31,6 +32,13 @@ export function RankingList({
   ...props
 }: RankingListProps) {
   const displayGames = games.slice(0, maxItems);
+  
+  // 获取分类颜色配置
+  const categories = getAllCategories();
+  const getCategoryColor = (categoryName: string) => {
+    const categoryData = categories.find(cat => cat.name === categoryName);
+    return categoryData?.color || '#6B7280';
+  };
 
   // Mock trend data for demonstration
   const getTrend = (index: number): 'up' | 'down' | 'same' => {
@@ -115,11 +123,11 @@ export function RankingList({
         {displayGames.map((game, index) => {
           const rank = index + 1;
           const trend = getTrend(index);
-          const categoryLower = game.category.toLowerCase();
+          const categoryColor = getCategoryColor(game.category);
 
           return (
             <Link
-              key={game.id}
+              key={game.slug}
               href={`/game/${game.slug}`}
               className="block"
             >
@@ -128,7 +136,7 @@ export function RankingList({
                 style={{
                   borderRadius: 'var(--radius-card)',
                   boxShadow: 'var(--shadow-sm)',
-                  borderLeft: `4px solid var(--color-game-${categoryLower})`,
+                  borderLeft: `4px solid ${categoryColor}`,
                   transition: 'all 0.3s ease',
                 }}
               >
@@ -166,7 +174,7 @@ export function RankingList({
                     <h3 
                       className="font-semibold text-lg transition-colors truncate"
                       style={{
-                        color: rank <= 3 ? `var(--color-game-${categoryLower})` : undefined
+                        color: rank <= 3 ? categoryColor : undefined
                       }}
                     >
                       {game.title}
@@ -176,7 +184,7 @@ export function RankingList({
                       <Badge 
                         className="text-xs font-medium text-white"
                         style={{
-                          backgroundColor: `var(--color-game-${categoryLower})`,
+                          backgroundColor: categoryColor,
                           boxShadow: 'var(--shadow-sm)'
                         }}
                       >
@@ -188,7 +196,7 @@ export function RankingList({
                           variant="outline" 
                           className="text-xs font-medium"
                           style={{
-                            borderColor: rank <= 3 ? `var(--color-game-${categoryLower})` : undefined
+                            borderColor: rank <= 3 ? categoryColor : undefined
                           }}
                         >
                           ⭐ {game.rating.toFixed(1)}
@@ -198,63 +206,36 @@ export function RankingList({
 
                     {/* Tags */}
                     <div className="flex flex-wrap gap-1 mt-2">
-                      {game.tags.slice(0, 3).map((tag) => {
-                        const tagClassName = rank <= 3 ? `bg-game-${categoryLower}-10` : '';
-                        return (
-                          <Badge
-                            key={tag}
-                            variant="secondary"
-                            className={`text-xs px-2 py-0.5 ${tagClassName}`}
-                            style={{
-                              color: rank <= 3 ? `var(--color-game-${categoryLower})` : undefined,
-                              borderColor: rank <= 3 ? `var(--color-game-${categoryLower})` : undefined,
-                            }}
-                          >
-                            {tag}
-                          </Badge>
-                        );
-                      })}
+                      {game.tags?.slice(0, 3).map((tag, tagIndex) => (
+                        <Badge
+                          key={`${tag}-${tagIndex}`}
+                          variant="secondary"
+                          className="text-xs"
+                        >
+                          {tag}
+                        </Badge>
+                      ))}
                     </div>
                   </div>
 
                   {/* Stats */}
                   {showStats && (
-                    <div className="hidden md:flex flex-col items-end text-sm text-muted-foreground">
+                    <div className="flex-shrink-0 text-right">
                       {game.popularity && (
-                        <span className="flex items-center gap-1">
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                          </svg>
+                        <div 
+                          className="text-sm font-medium"
+                          style={{
+                            color: rank <= 3 ? categoryColor : undefined,
+                          }}
+                        >
                           {game.popularity}k
-                        </span>
+                        </div>
                       )}
-                      
-                      {game.releaseDate && (
-                        <span className="text-xs">
-                          {new Date(game.releaseDate).getFullYear()}
-                        </span>
-                      )}
+                      <div className="text-xs text-muted-foreground">
+                        plays
+                      </div>
                     </div>
                   )}
-
-                  {/* Play Button */}
-                  <div className="hidden md:block flex-shrink-0">
-                    <Button
-                      size="sm"
-                      className="opacity-0 group-hover:opacity-100 transition-opacity"
-                      style={{
-                        backgroundColor: `var(--color-game-${categoryLower})`,
-                        color: 'white',
-                      }}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        // Navigate to game details page
-                        window.location.href = `/game/${game.slug}`;
-                      }}
-                    > 
-                      Play
-                    </Button>
-                  </div>
                 </div>
               </div>
             </Link>
@@ -264,8 +245,10 @@ export function RankingList({
 
       {games.length > maxItems && (
         <div className="text-center pt-6">
-          <Button variant="outline" size="lg">
-            View All Rankings
+          <Button variant="outline" size="lg" asChild>
+            <Link href="/games?sort=popular">
+              View All Rankings
+            </Link>
           </Button>
         </div>
       )}

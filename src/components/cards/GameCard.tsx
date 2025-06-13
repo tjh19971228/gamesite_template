@@ -8,6 +8,7 @@ import { GameCardProps } from '@/types';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { getAllCategories } from '@/lib/data';
 
 /**
  * Game Card Component
@@ -24,6 +25,11 @@ export function GameCard({
   className,
   ...props
 }: GameCardProps) {
+  // 获取分类颜色配置
+  const categories = getAllCategories();
+  const categoryData = categories.find(cat => cat.name === game.category);
+  const categoryColor = categoryData?.color || '#6B7280';
+
   const cardContent = (
     <Card
       className={cn(
@@ -87,9 +93,9 @@ export function GameCard({
         <div className="absolute top-2 right-2">
           <Badge 
             variant="outline" 
-            className={`bg-game-${game.category.toLowerCase()} text-white border-0`}
+            className="text-white border-0"
             style={{
-              backgroundColor: game.category && `var(--color-game-${game.category.toLowerCase()})`,
+              backgroundColor: categoryColor,
               color: '#ffffff',
               textShadow: '0 1px 2px rgba(0,0,0,0.5)', /* 添加文字阴影增加对比度 */
               boxShadow: 'var(--shadow-sm)'
