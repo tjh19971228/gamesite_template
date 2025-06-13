@@ -132,9 +132,9 @@ export function GameCard({
           {/* Tags */}
           {showTags && game.tags && game.tags.length > 0 && (
             <div className="flex flex-wrap gap-1 mb-2">
-              {game.tags.slice(0, layout === 'list' ? 4 : 3).map((tag) => (
+              {game.tags.slice(0, layout === 'list' ? 4 : 3).map((tag, index) => (
                 <Badge
-                  key={tag}
+                  key={`${tag}-${index}`}
                   variant="secondary"
                   className="text-xs px-2 py-0.5"
                   style={{
