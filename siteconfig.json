@@ -179,6 +179,24 @@
             }
         }
     },
+    "social": {
+        "twitter": {
+            "enabled": true,
+            "link": "https://x.com/ItalianBrainrotGames"
+        },
+        "youtube": {
+            "enabled": true,
+            "link": "https://www.youtube.com/@ItalianBrainrotGames"
+        },
+        "discord": {
+            "enabled": true,
+            "link": "https://discord.gg/ItalianBrainrotGames"
+        },
+        "github": {
+            "enabled": true,
+            "link": "https://github.com/ItalianBrainrotGames"
+        }
+    },
     "robots": {
         "rules": {
             "userAgent": "*",

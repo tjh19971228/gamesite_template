@@ -1,6 +1,24 @@
 import siteConfigData from '../../siteconfig.json';
 
 export interface SiteConfig {
+  social: {
+    twitter: {
+      enabled: boolean;
+      link: string;
+    };
+    youtube: {
+      enabled: boolean;
+      link: string;
+    };
+    discord: {
+      enabled: boolean;
+      link: string;
+    };
+    github: {
+      enabled: boolean;
+      link: string;
+    };
+  };
   siteInfo: typeof siteConfigData.siteInfo;
   branding: {
     siteName: string;
@@ -44,3 +62,9 @@ export function getSiteInfo() {
   const config = getSiteConfig();
   return config.siteInfo;
 } 
+
+// 导出社交配置
+export function getSocialConfig() {
+  const config = getSiteConfig();
+  return config.social;
+}
