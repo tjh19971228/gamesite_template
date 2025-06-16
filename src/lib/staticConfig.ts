@@ -36,5 +36,5 @@ export const ISR_SUMMARY = {
   defaultRevalidateTime: 3600,
   backgroundRevalidation: true,
   fallback: 'blocking',
-  lastUpdated: '2025-06-16T06:50:05.555Z'
+  lastUpdated: '2025-06-16T08:51:41.225Z'
 };
