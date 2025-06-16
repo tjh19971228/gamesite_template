@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import Script from 'next/script';
 import { getSiteInfo } from '@/lib/siteConfig';
 import { usePathname, useSearchParams } from 'next/navigation';
@@ -20,16 +20,15 @@ function trackPageView(url: string) {
 // 定义全局 Window 接口扩展
 declare global {
   interface Window {
-    dataLayer: any[];
-    gtag: (...args: any[]) => void;
+    dataLayer: unknown[];
+    gtag: (...args: unknown[]) => void;
   }
 }
 
 /**
- * Google Analytics 组件
- * 使用 siteInfo 中的 googleAnalyticsId
+ * 内部 Google Analytics 组件
  */
-export function GoogleAnalytics() {
+function GoogleAnalyticsInner() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   
@@ -40,10 +39,18 @@ export function GoogleAnalytics() {
     const url = pathname + (searchParams?.toString() ? `?${searchParams.toString()}` : '');
     trackPageView(url);
   }, [pathname, searchParams]);
-  
+
+  return null;
+}
+
+/**
+ * Google Analytics 组件
+ * 使用 siteInfo 中的 googleAnalyticsId
+ */
+export function GoogleAnalytics() {
   // 如果没有配置 Google Analytics ID，则不渲染任何内容
   if (!gaId) return null;
-  
+
   return (
     <>
       {/* Global Site Tag (gtag.js) - Google Analytics */}
@@ -65,6 +72,9 @@ export function GoogleAnalytics() {
           `,
         }}
       />
+      <Suspense fallback={null}>
+        <GoogleAnalyticsInner />
+      </Suspense>
     </>
   );
 } 

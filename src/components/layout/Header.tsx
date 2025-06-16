@@ -62,7 +62,8 @@ export function Header({ className }: HeaderProps) {
         ...categories.slice(0, 5).map(category => ({
           title: `${category.name} Games`,
           href: `/category/${category.slug}`
-        }))
+        })),
+        { title: 'All Games', href: '/games' }
       ]
     },
     {
@@ -74,7 +75,8 @@ export function Header({ className }: HeaderProps) {
         ...categories.map(category => ({
           title: category.name,
           href: `/category/${category.slug}`
-        }))
+        })),
+        { title: 'All Categories', href: '/categories' }
       ]
     },
     {

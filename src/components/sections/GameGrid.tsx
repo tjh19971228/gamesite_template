@@ -105,7 +105,7 @@ export function GameGrid({
     >
       {games.map((game, index) => (
         <GameCard
-          key={game.id}
+          key={game.slug}
           game={game}
           layout="grid"
           showTags

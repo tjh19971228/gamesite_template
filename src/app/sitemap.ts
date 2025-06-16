@@ -1,22 +1,22 @@
-import siteConfig from '../../siteconfig.json';
-import { MetadataRoute } from 'next';
-
-type SitemapItem = {
-  url: string;
-  lastModified: Date;
-  changeFrequency?: string;
-  priority?: number;
-};
+import siteConfig from "../../siteconfig.json";
+import { MetadataRoute } from "next";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = siteConfig.seo.metadataBase;
   const now = new Date();
-  
+
   // 静态路由
-  const staticRoutes = siteConfig.sitemap.staticRoutes.map((route: any) => ({
+  const staticRoutes = siteConfig.sitemap.staticRoutes.map((route: { path: string; changeFrequency: string; priority: number }) => ({
     url: `${baseUrl}${route.path}`,
     lastModified: now,
-    changeFrequency: route.changeFrequency,
+    changeFrequency: route.changeFrequency as
+      | "daily"
+      | "weekly"
+      | "monthly"
+      | "always"
+      | "hourly"
+      | "yearly"
+      | "never",
     priority: route.priority,
   }));
 

@@ -153,7 +153,7 @@ export const GamePlayer = ({ game }: GamePlayerProps) => {
       {/* 游戏 Iframe */} 
       <iframe
         ref={iframeRef}
-        src={game.playUrl || `https://html5.gamedistribution.com/${game.id}`}
+        src={game.playUrl || `https://html5.gamedistribution.com/${game.slug}`}
         className="w-full h-full border-0"
         allowFullScreen
         title={game.title}

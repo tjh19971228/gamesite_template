@@ -6,11 +6,46 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { getAllBlogPosts } from "@/lib/data";
-import { getBlogPageStructure } from "@/lib/config";
+import { getBlogPageStructure, sortComponentsByOrder } from "@/lib/config";
 import { SchemaOrg } from "@/components/SchemaOrg";
 import { getBlogListSchema } from "@/lib/schema";
 import { BlogPost, BlogPageStructure } from "@/types";
 
+interface BlogPageConfig {
+  enabled: boolean;
+  showTitle: boolean;
+  showSubtitle: boolean;
+  showSearch: boolean;
+  title: string;
+  showExcerpt: boolean;
+  showAuthor: boolean;
+  showDate: boolean;
+  showReadTime: boolean;
+  showBenefits: boolean;
+  subtitle: string;
+  components: {
+    popularPosts: {
+      enabled: boolean;
+      title: string;
+      maxPosts: number;
+    };
+    categories: {
+      enabled: boolean;
+      title: string;
+      showCount: boolean;
+    };
+    newsletter: {
+      enabled: boolean;
+      title: string;
+      description: string;
+    };
+    tags: {
+      enabled: boolean;
+      title: string;
+      maxTags: number;
+    };
+  };
+}
 /**
  * Generate metadata for blog page
  */
@@ -54,25 +89,43 @@ export default async function BlogPage() {
   // Get blog list schema
   const schemaData = await getBlogListSchema();
 
-  return (
-    <>
-      <SchemaOrg data={schemaData} />
+  // Sort components by order
+  const sortedComponents = sortComponentsByOrder(
+    sections as {
+      [key: string]: {
+        enabled: boolean;
+        order: number;
+        props: Record<string, unknown>;
+      };
+    }
+  );
 
-      <Layout>
-        {/* Page Header */}
-        {sections.pageHeader?.enabled && (
-          <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-12">
+  // Component rendering function
+  const renderComponent = (componentName: string, config: BlogPageConfig) => {
+    if (!config.enabled) return null;
+
+    switch (componentName) {
+      case "pageHeader":
+        return (
+          <div
+            key={componentName}
+            className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-12"
+          >
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto text-center">
-                {sections.pageHeader.showTitle && (
-                  <h1 className="text-4xl font-bold mb-4">{page.title}</h1>
+                {config.showTitle && (
+                  <h1 className="text-4xl font-bold mb-4">
+                    {page.title as React.ReactNode}
+                  </h1>
                 )}
 
-                {sections.pageHeader.showSubtitle && page.subtitle && (
-                  <p className="text-xl opacity-90 mb-6">{page.subtitle}</p>
+                {config.showSubtitle && page.subtitle && (
+                  <p className="text-xl opacity-90 mb-6">
+                    {page.subtitle as React.ReactNode}
+                  </p>
                 )}
 
-                {sections.pageHeader.showSearch && page.showSearch && (
+                {config.showSearch && page.showSearch && (
                   <div className="max-w-md mx-auto">
                     <div className="flex gap-2">
                       <Input
@@ -103,16 +156,15 @@ export default async function BlogPage() {
               </div>
             </div>
           </div>
-        )}
+        );
 
-        {/* Featured Posts */}
-        {sections.featuredPosts?.enabled && featuredPosts.length > 0 && (
-          <div className="py-16">
+      case "featuredPosts":
+        if (featuredPosts.length === 0) return null;
+        return (
+          <div key={componentName} className="py-16">
             <div className="container mx-auto px-4">
               <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold mb-4">
-                  {sections.featuredPosts.title}
-                </h2>
+                <h2 className="text-3xl font-bold mb-4">{config.title}</h2>
                 <p className="text-muted-foreground">
                   Don&apos;t miss these important articles
                 </p>
@@ -121,17 +173,17 @@ export default async function BlogPage() {
               <BlogEntry
                 posts={featuredPosts as unknown as BlogPost[]}
                 layout="featured"
-                showExcerpt={sections.featuredPosts.showExcerpt}
-                showAuthor={sections.featuredPosts.showAuthor}
-                showDate={sections.featuredPosts.showDate}
+                showExcerpt={config.showExcerpt}
+                showAuthor={config.showAuthor}
+                showDate={config.showDate}
               />
             </div>
           </div>
-        )}
+        );
 
-        {/* Category Filter */}
-        {sections.categoryFilter?.enabled && (
-          <div className="py-8 bg-muted/30">
+      case "categoryFilter":
+        return (
+          <div key={componentName} className="py-8 bg-muted/30">
             <div className="container mx-auto px-4">
               <div className="text-center mb-8">
                 <h3 className="text-lg font-semibold mb-4">
@@ -154,17 +206,15 @@ export default async function BlogPage() {
               </div>
             </div>
           </div>
-        )}
+        );
 
-        {/* Recent Posts */}
-        {sections.recentPosts?.enabled && (
-          <div className="py-16">
+      case "recentPosts":
+        return (
+          <div key={componentName} className="py-16">
             <div className="container mx-auto px-4">
               <div className="flex items-center justify-between mb-12">
                 <div>
-                  <h2 className="text-3xl font-bold mb-2">
-                    {sections.recentPosts.title}
-                  </h2>
+                  <h2 className="text-3xl font-bold mb-2">{config.title}</h2>
                   <p className="text-muted-foreground">
                     Stay up to date with the latest gaming news and insights
                   </p>
@@ -184,10 +234,10 @@ export default async function BlogPage() {
               <BlogEntry
                 posts={recentPosts as unknown as BlogPost[]}
                 layout="grid"
-                showExcerpt={sections.recentPosts.showExcerpt}
-                showAuthor={sections.recentPosts.showAuthor}
-                showDate={sections.recentPosts.showDate}
-                showReadTime={sections.recentPosts.showReadTime}
+                showExcerpt={config.showExcerpt}
+                showAuthor={config.showAuthor}
+                showDate={config.showDate}
+                showReadTime={config.showReadTime}
               />
 
               {/* Load More */}
@@ -200,58 +250,150 @@ export default async function BlogPage() {
               )}
             </div>
           </div>
-        )}
+        );
 
-        {/* Newsletter Section */}
-        {sections.newsletter?.enabled && (
-          <div className="py-16 bg-primary text-primary-foreground">
+      case "sidebar":
+        return (
+          <div key={componentName} className="py-16 bg-muted/30">
             <div className="container mx-auto px-4">
-              <div className="max-w-2xl mx-auto text-center">
-                <h2 className="text-3xl font-bold mb-4">
-                  {sections.newsletter.title}
-                </h2>
-                <p className="text-lg opacity-90 mb-8">
-                  {sections.newsletter.subtitle}
-                </p>
-
-                {sections.newsletter.showBenefits && (
-                  <div className="grid md:grid-cols-3 gap-4 mb-8 text-sm">
-                    <div className="flex items-center justify-center gap-2">
-                      <span>📧</span>
-                      <span>Weekly Updates</span>
-                    </div>
-                    <div className="flex items-center justify-center gap-2">
-                      <span>🎮</span>
-                      <span>Game Reviews</span>
-                    </div>
-                    <div className="flex items-center justify-center gap-2">
-                      <span>📰</span>
-                      <span>Industry News</span>
+              <div className="grid lg:grid-cols-4 gap-8">
+                {config.components?.popularPosts?.enabled && (
+                  <div>
+                    <h3 className="text-lg font-semibold mb-4">
+                      {config.components.popularPosts.title}
+                    </h3>
+                    <div className="space-y-3">
+                      {allPosts
+                        .slice(0, config.components.popularPosts.maxPosts || 5)
+                        .map((post) => (
+                          <div key={post.slug} className="text-sm">
+                            <h4 className="font-medium line-clamp-2 mb-1">
+                              {post.title}
+                            </h4>
+                            <p className="text-muted-foreground">
+                              {post.publishedAt}
+                            </p>
+                          </div>
+                        ))}
                     </div>
                   </div>
                 )}
 
-                <div className="max-w-md mx-auto">
-                  <div className="flex gap-2">
-                    <Input
-                      type="email"
-                      placeholder="Enter your email"
-                      className="bg-white/10 border-white/20 placeholder:text-white/70 text-white"
-                    />
-                    <Button variant="secondary">Subscribe</Button>
+                {config.components?.categories?.enabled && (
+                  <div>
+                    <h3 className="text-lg font-semibold mb-4">
+                      {config.components.categories.title}
+                    </h3>
+                    <div className="space-y-2">
+                      {categories.map((category) => (
+                        <div
+                          key={category}
+                          className="flex justify-between text-sm"
+                        >
+                          <span>{category}</span>
+                          {config.components.categories.showCount && (
+                            <span className="text-muted-foreground">
+                              {
+                                allPosts.filter((p) => p.category === category)
+                                  .length
+                              }
+                            </span>
+                          )}
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                  <p className="text-xs opacity-75 mt-2">
-                    No spam, unsubscribe at any time
-                  </p>
+                )}
+
+                {config.components?.newsletter?.enabled && (
+                  <div>
+                    <h3 className="text-lg font-semibold mb-4">
+                      {config.components.newsletter.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      {config.components.newsletter.description}
+                    </p>
+                    <div className="space-y-2">
+                      <Input
+                        placeholder="Enter your email"
+                        className="text-sm"
+                      />
+                      <Button size="sm" className="w-full">
+                        Subscribe
+                      </Button>
+                    </div>
+                  </div>
+                )}
+
+                {config.components?.tags?.enabled && (
+                  <div>
+                    <h3 className="text-lg font-semibold mb-4">
+                      {config.components.tags.title}
+                    </h3>
+                    <div className="flex flex-wrap gap-1">
+                      {[...new Set(allPosts.flatMap((p) => p.tags))]
+                        .slice(0, config.components.tags.maxTags || 20)
+                        .map((tag) => (
+                          <Badge
+                            key={tag}
+                            variant="outline"
+                            className="text-xs"
+                          >
+                            {tag}
+                          </Badge>
+                        ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        );
+
+      case "newsletter":
+        return (
+          <div key={componentName} className="py-16 bg-primary text-white">
+            <div className="container mx-auto px-4">
+              <div className="max-w-2xl mx-auto text-center">
+                <h2 className="text-3xl font-bold mb-4">{config.title}</h2>
+                <p className="text-xl opacity-90 mb-8">{config.subtitle}</p>
+                {config.showBenefits && (
+                  <div className="flex justify-center gap-6 mb-8 text-sm">
+                    <div>📧 Weekly Updates</div>
+                    <div>🎮 Game Reviews</div>
+                    <div>📈 Industry News</div>
+                  </div>
+                )}
+                <div className="flex gap-2 max-w-md mx-auto">
+                  <Input
+                    placeholder="Enter your email"
+                    className="bg-white/10 border-white/20 text-white placeholder:text-white/70"
+                  />
+                  <Button variant="secondary">Subscribe</Button>
                 </div>
               </div>
             </div>
           </div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <>
+      <SchemaOrg data={schemaData} />
+
+      <Layout>
+        {/* Render components in order */}
+        {sortedComponents.map(([componentName, config]) =>
+          renderComponent(componentName, config as BlogPageConfig)
         )}
       </Layout>
     </>
   );
 }
 
-export const dynamic = 'force-static';
+export const dynamic = "force-static";
 export const revalidate = 7200; // 2 hours
