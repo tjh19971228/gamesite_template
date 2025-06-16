@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { ShareButton } from '@/components/ShareButton';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
@@ -282,15 +283,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <div className="max-w-4xl mx-auto">
               <div className="flex flex-col md:flex-row gap-6 items-center justify-between">
                 <div className="flex items-center gap-4">
-                  <Button variant="outline" size="sm">
+                  <Button variant="default" size="sm" className="bg-primary text-white hover:bg-primary/90">
                     👍 Like ({Math.floor(Math.random() * 20) + 5})
                   </Button>
-                  <Button variant="outline" size="sm">
+                  <Button variant="default" size="sm" className="bg-emerald-600 text-white hover:bg-emerald-700">
                     💬 Comments ({Math.floor(Math.random() * 10) + 2})
                   </Button>
-                  <Button variant="outline" size="sm">
-                    📤 Share
-                  </Button>
+                  <ShareButton title={post.title} />
                 </div>
                 
                 <div className="flex items-center gap-4">
