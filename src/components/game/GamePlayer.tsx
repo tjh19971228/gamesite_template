@@ -6,9 +6,10 @@ import { Game } from "@/types";
 // Game player component
 interface GamePlayerProps {
   game: Game;
+  isMobileView?: boolean; // 新增：是否为移动端视图
 }
 
-export const GamePlayer = ({ game }: GamePlayerProps) => {
+export const GamePlayer = ({ game, isMobileView = false }: GamePlayerProps) => {
   const [showOverlay, setShowOverlay] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -103,7 +104,11 @@ export const GamePlayer = ({ game }: GamePlayerProps) => {
 
   // 构建游戏容器类名
   const gameContainerClassName = cn(
-    "bg-gray-800 dark:bg-dark-900 rounded-lg overflow-hidden aspect-video w-full shadow-lg relative",
+    "bg-gray-800 dark:bg-dark-900 overflow-hidden w-full relative",
+    // 移动端视图：减少圆角，增加高度，去掉阴影
+    isMobileView 
+      ? "rounded-none aspect-[4/3] min-h-[65vh]" 
+      : "rounded-lg aspect-video shadow-lg",
     cssFullscreen && "fixed inset-0 z-50 bg-black rounded-none aspect-auto" // CSS全屏样式
   );
 

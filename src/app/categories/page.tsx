@@ -20,6 +20,9 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import { SchemaOrg } from '@/components/SchemaOrg';
+import { AnimatedTestimonials } from '@/components/ui/animated-testimonials';
+import ExpandableCardDemo from '@/components/expandable-card-demo-standard';
+import ExpandableCardGridDemo from '@/components/expandable-card-demo-grid';
 import { categories, getAllGames } from "@/lib/data";
 import {
   getCategoriesPageStructure,
@@ -42,6 +45,7 @@ interface CategoriesPageConfig {
   maxCategories: number;
   showLastUpdated: boolean;
   showPreviewGames: boolean;
+  layout?: string;
 }
 
 /**
@@ -176,17 +180,35 @@ export default async function CategoriesPage() {
                 </p>
               </div>
 
-              <div
-                className={`grid gap-${config.gap || "6"} ${
-                  config.columns === 2
-                    ? "md:grid-cols-2"
-                    : config.columns === 3
-                    ? "md:grid-cols-2 lg:grid-cols-3"
-                    : config.columns === 4
-                    ? "md:grid-cols-2 lg:grid-cols-4"
-                    : "md:grid-cols-2 lg:grid-cols-3"
-                }`}
-              >
+              {config.layout === 'effect-card' ? (
+                <AnimatedTestimonials 
+                  testimonials={sortedCategories.map((category) => ({
+                    quote: category.description || `Explore ${category.name.toLowerCase()} games and discover your next favorite`,
+                    name: category.name,
+                    designation: `${category.gameCount} games available`,
+                    icon: category.icon,
+                    slug: category.slug
+                  }))}
+                  autoplay={true}
+                />
+              ) : config.layout === 'expandable-card' ? (
+                <ExpandableCardDemo 
+                  categories={sortedCategories} 
+                  games={allGames}
+                  maxPreviewGames={config.maxPreviewGames || 3}
+                />
+              ) : (
+                <div
+                  className={`grid gap-${config.gap || "6"} ${
+                    config.columns === 2
+                      ? "md:grid-cols-2"
+                      : config.columns === 3
+                      ? "md:grid-cols-2 lg:grid-cols-3"
+                      : config.columns === 4
+                      ? "md:grid-cols-2 lg:grid-cols-4"
+                      : "md:grid-cols-2 lg:grid-cols-3"
+                  }`}
+                >
                 {sortedCategories.map((category) => (
                   <Link key={category.id} href={`/category/${category.slug}`}>
                     <Card className="group hover:shadow-lg transition-all duration-300 cursor-pointer h-full">
@@ -247,7 +269,8 @@ export default async function CategoriesPage() {
                     </Card>
                   </Link>
                 ))}
-              </div>
+                </div>
+              )}
             </div>
           </div>
         );
@@ -361,39 +384,53 @@ export default async function CategoriesPage() {
                 </div>
               )}
 
-              <div className="space-y-4">
-                {sortedCategories.map((category) => (
-                  <Link key={category.id} href={`/category/${category.slug}`}>
-                    <Card className="group hover:shadow-md transition-all duration-300 cursor-pointer">
-                      <CardContent className="p-6">
-                        <div className="flex items-center gap-4">
-                          <div className="text-3xl">{category.icon}</div>
-                          <div className="flex-1">
-                            <h3 className="text-lg font-semibold group-hover:text-primary transition-colors">
-                              {category.name}
-                            </h3>
-                            {config.showDescription && (
-                              <p className="text-sm text-muted-foreground">
-                                {category.description}
-                              </p>
+              {config.layout === 'expandable-card' ? (
+                <ExpandableCardDemo 
+                  categories={sortedCategories} 
+                  games={allGames}
+                  maxPreviewGames={config.maxPreviewGames || 3}
+                />
+              ) : config.layout === 'expandable-card-grid' ? (
+                <ExpandableCardGridDemo 
+                  categories={sortedCategories} 
+                  games={allGames}
+                  maxPreviewGames={config.maxPreviewGames || 3}
+                />
+              ) : (
+                <div className="grid md:grid-cols-2 gap-6">
+                  {sortedCategories.map((category) => (
+                    <Link key={category.id} href={`/category/${category.slug}`}>
+                      <Card className="group hover:shadow-md transition-all duration-300 cursor-pointer">
+                        <CardContent className="p-6">
+                          <div className="flex items-center gap-4">
+                            <div className="text-3xl">{category.icon}</div>
+                            <div className="flex-1">
+                              <h3 className="text-lg font-semibold group-hover:text-primary transition-colors">
+                                {category.name}
+                              </h3>
+                              {config.showDescription && (
+                                <p className="text-sm text-muted-foreground">
+                                  {category.description}
+                                </p>
+                              )}
+                            </div>
+                            {config.showGameCount && (
+                              <div className="text-right">
+                                <div className="text-2xl font-bold text-primary">
+                                  {category.gameCount}
+                                </div>
+                                <div className="text-xs text-muted-foreground">
+                                  games
+                                </div>
+                              </div>
                             )}
                           </div>
-                          {config.showGameCount && (
-                            <div className="text-right">
-                              <div className="text-2xl font-bold text-primary">
-                                {category.gameCount}
-                              </div>
-                              <div className="text-xs text-muted-foreground">
-                                games
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                ))}
-              </div>
+                        </CardContent>
+                      </Card>
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         );
@@ -411,38 +448,56 @@ export default async function CategoriesPage() {
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {sortedCategories
-                  .filter((cat) => cat.gameCount > 0)
-                  .slice(0, config.maxCategories || 4)
-                  .map((category) => (
-                    <Link key={category.id} href={`/category/${category.slug}`}>
-                      <Card className="group hover:shadow-lg transition-all duration-300 cursor-pointer h-full">
-                        <CardHeader>
-                          <div className="text-center">
-                            <div className="text-3xl mb-2">{category.icon}</div>
-                            <CardTitle className="group-hover:text-primary transition-colors">
-                              {category.name}
-                            </CardTitle>
-                          </div>
-                        </CardHeader>
-
-                        <CardContent>
-                          <div className="text-center space-y-2">
-                            <div className="text-sm text-muted-foreground">
-                              {category.gameCount} games
+              {config.layout === 'expandable-card' ? (
+                <ExpandableCardDemo 
+                  categories={sortedCategories
+                    .filter((cat) => cat.gameCount > 0)
+                    .slice(0, config.maxCategories || 4)} 
+                  games={allGames}
+                  maxPreviewGames={config.maxPreviewGames || 3}
+                />
+              ) : config.layout === 'expandable-card-grid' ? (
+                <ExpandableCardGridDemo 
+                  categories={sortedCategories
+                    .filter((cat) => cat.gameCount > 0)
+                    .slice(0, config.maxCategories || 4)} 
+                  games={allGames}
+                  maxPreviewGames={config.maxPreviewGames || 3}
+                />
+              ) : (
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {sortedCategories
+                    .filter((cat) => cat.gameCount > 0)
+                    .slice(0, config.maxCategories || 4)
+                    .map((category) => (
+                      <Link key={category.id} href={`/category/${category.slug}`}>
+                        <Card className="group hover:shadow-lg transition-all duration-300 cursor-pointer h-full">
+                          <CardHeader>
+                            <div className="text-center">
+                              <div className="text-3xl mb-2">{category.icon}</div>
+                              <CardTitle className="group-hover:text-primary transition-colors">
+                                {category.name}
+                              </CardTitle>
                             </div>
-                            {config.showLastUpdated && (
-                              <div className="text-xs text-muted-foreground">
-                                Updated recently
+                          </CardHeader>
+
+                          <CardContent>
+                            <div className="text-center space-y-2">
+                              <div className="text-sm text-muted-foreground">
+                                {category.gameCount} games
                               </div>
-                            )}
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </Link>
-                  ))}
-              </div>
+                              {config.showLastUpdated && (
+                                <div className="text-xs text-muted-foreground">
+                                  Updated recently
+                                </div>
+                              )}
+                            </div>
+                          </CardContent>
+                        </Card>
+                      </Link>
+                    ))}
+                </div>
+              )}
             </div>
           </div>
         );

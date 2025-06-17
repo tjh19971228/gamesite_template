@@ -49,14 +49,14 @@
       "order": 5,
       "title": "Popular This Week",
       "maxGames": 8,
-      "layout": "grid"
+      "layout": "featured"
     },
     "recentlyAdded": {
       "enabled": true,
       "order": 6,
       "title": "Recently Added",
       "maxGames": 6,
-      "layout": "grid"
+      "layout": "list"
     }
   },
   "filters": {

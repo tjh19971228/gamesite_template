@@ -10,6 +10,7 @@ import { getBlogPageStructure, sortComponentsByOrder } from "@/lib/config";
 import { SchemaOrg } from "@/components/SchemaOrg";
 import { getBlogListSchema } from "@/lib/schema";
 import { BlogPost, BlogPageStructure } from "@/types";
+import { CategoryFilter } from "@/components/blog/CategoryFilter";
 
 interface BlogPageConfig {
   enabled: boolean;
@@ -82,9 +83,8 @@ export default async function BlogPage() {
     .slice(0, sections.recentPosts?.postsPerPage || 9);
 
   // Get categories
-  const categories = [
-    ...new Set(allPosts.map((post) => post.category)),
-  ] as string[];
+  const categories = filters.categories?.options || 
+    [...new Set(allPosts.map((post) => post.category))] as string[];
 
   // Get blog list schema
   const schemaData = await getBlogListSchema();
@@ -183,29 +183,19 @@ export default async function BlogPage() {
 
       case "categoryFilter":
         return (
-          <div key={componentName} className="py-8 bg-muted/30">
-            <div className="container mx-auto px-4">
-              <div className="text-center mb-8">
-                <h3 className="text-lg font-semibold mb-4">
-                  Browse by Category
-                </h3>
-                <div className="flex flex-wrap justify-center gap-2">
-                  <Badge variant="default" className="cursor-pointer">
-                    All Articles
-                  </Badge>
-                  {categories.map((category) => (
-                    <Badge
-                      key={category}
-                      variant="outline"
-                      className="cursor-pointer hover:bg-primary hover:text-primary-foreground"
-                    >
-                      {category}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
+          <CategoryFilter 
+            key={componentName} 
+            categories={categories} 
+            posts={allPosts as unknown as BlogPost[]} 
+            showExcerpt={config.showExcerpt}
+            showAuthor={config.showAuthor}
+            showDate={config.showDate}
+            showReadTime={config.showReadTime}
+            defaultCategory={filters.categories?.defaultValue || "all"}
+            sortingOptions={filters.sorting?.options || ["newest", "popular", "oldest"]}
+            defaultSortOption={filters.sorting?.defaultValue || "newest"}
+            sortingEnabled={filters.sorting?.enabled || false}
+          />
         );
 
       case "recentPosts":
@@ -219,17 +209,6 @@ export default async function BlogPage() {
                     Stay up to date with the latest gaming news and insights
                   </p>
                 </div>
-
-                {filters.sorting?.enabled && (
-                  <div className="flex gap-2">
-                    <Button variant="secondary" size="sm">
-                      Newest First
-                    </Button>
-                    <Button variant="ghost" size="sm">
-                      Most Popular
-                    </Button>
-                  </div>
-                )}
               </div>
               <BlogEntry
                 posts={recentPosts as unknown as BlogPost[]}
@@ -252,7 +231,7 @@ export default async function BlogPage() {
           </div>
         );
 
-      case "sidebar":
+      // case "sidebar":
         return (
           <div key={componentName} className="py-16 bg-muted/30">
             <div className="container mx-auto px-4">

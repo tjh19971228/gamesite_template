@@ -99,7 +99,7 @@ export function CategoryNav({
         >
           <Button
             size="sm"
-            className="h-auto px-4 py-2 flex items-center gap-2 transition-colors"
+            className="h-auto px-4 py-2 flex items-center gap-2 transition-colors cursor-pointer"
             style={{
               backgroundColor: category.color || '#6B7280',
               color: 'white',

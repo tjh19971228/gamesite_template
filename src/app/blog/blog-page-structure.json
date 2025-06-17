@@ -2,7 +2,12 @@
   "metadata": {
     "title": "Gaming Blog - Latest News & Reviews | GameSite",
     "description": "Stay updated with the latest gaming news, reviews, and guides",
-    "keywords": ["gaming blog", "game reviews", "gaming news", "game guides"]
+    "keywords": [
+      "gaming blog",
+      "game reviews",
+      "gaming news",
+      "game guides"
+    ]
   },
   "page": {
     "title": "Gaming Blog",
@@ -85,12 +90,15 @@
   "filters": {
     "categories": {
       "enabled": true,
-      "defaultValue": "all",
-      "options": ["Technology", "Reviews", "Development", "Industry", "Guides"]
+      "defaultValue": "all"
     },
     "sorting": {
       "enabled": true,
-      "options": ["newest", "popular", "oldest"],
+      "options": [
+        "newest",
+        "popular",
+        "oldest"
+      ],
       "defaultValue": "newest"
     },
     "search": {
@@ -98,10 +106,5 @@
       "placeholder": "Search articles...",
       "showSuggestions": true
     }
-  },
-  "pagination": {
-    "enabled": true,
-    "type": "pagination",
-    "itemsPerPage": 9
   }
-} 
+}

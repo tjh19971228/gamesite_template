@@ -8,6 +8,7 @@ import { BlogPost } from '@/types';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { CardContainer, CardBody, CardItem } from '@/components/ui/3d-card';
 
 interface BlogEntryProps {
   posts: BlogPost[];
@@ -57,7 +58,7 @@ export function BlogEntry({
         return 'grid grid-cols-1 lg:grid-cols-3 gap-6';
       case 'grid':
       default:
-        return 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6';
+        return 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2';
     }
   };
 
@@ -135,6 +136,121 @@ export function BlogEntry({
       );
     }
 
+    // Grid layout with 3D card effect
+    if (layout === 'grid') {
+      return (
+        <CardContainer key={post.id} className="inter-var" containerClassName="py-0">
+          <CardBody className="bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-full h-auto rounded-xl p-6 border">
+            <Link href={`/blog/${post.slug}`} className="block h-full">
+              {/* Image */}
+              <CardItem
+                translateZ="50"
+                className="w-full mb-4 block"
+              >
+                <div className="relative h-[200px] w-full overflow-hidden rounded-lg bg-muted">
+                  <Image
+                    src={post.featuredImage || `https://picsum.photos/seed/${post.slug}/600/400`}
+                    alt={post.title}
+                    fill
+                    className="object-cover group-hover/card:shadow-xl transition-all duration-300"
+                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                  />
+                  
+                  {/* Category Badge */}
+                  <CardItem
+                    translateZ="60"
+                    className="absolute top-4 left-4"
+                  >
+                    <Badge 
+                      className="text-white border-0"
+                      style={{
+                        backgroundColor: post.category === 'News' 
+                          ? 'rgb(var(--color-primary-500))' 
+                          : post.category === 'Reviews' 
+                          ? 'rgb(var(--color-accent-500))' 
+                          : post.category === 'Guides' 
+                          ? 'rgb(var(--color-success-500))' 
+                          : post.category === 'Industry' 
+                          ? 'rgb(var(--color-secondary-500))'
+                          : 'rgb(var(--color-primary-700))',
+                        boxShadow: 'var(--shadow-sm)'
+                      }}
+                    >
+                      {post.category}
+                    </Badge>
+                  </CardItem>
+                </div>
+              </CardItem>
+
+              {/* Content */}
+              <div className="flex flex-col flex-1 mt-4">
+                {/* Date and read time */}
+                <CardItem
+                  translateZ="30"
+                  className="flex items-center gap-2 text-sm text-muted-foreground mb-3"
+                >
+                  {showDate && (
+                    <span>{formatDate(post.publishedAt)}</span>
+                  )}
+                  {showReadTime && post.readTime && (
+                    <>
+                      <span>•</span>
+                      <span>{post.readTime} min read</span>
+                    </>
+                  )}
+                </CardItem>
+                
+                {/* Title */}
+                <CardItem
+                  translateZ="40"
+                  className="text-lg font-semibold hover:text-primary transition-colors line-clamp-2 mb-3"
+                >
+                  {post.title}
+                </CardItem>
+
+                {/* Excerpt */}
+                {showExcerpt && (
+                  <CardItem
+                    translateZ="20"
+                    className="text-muted-foreground line-clamp-2 mb-4 flex-1"
+                  >
+                    {post.excerpt}
+                  </CardItem>
+                )}
+                
+                {/* Author */}
+                {showAuthor && (
+                  <CardItem
+                    translateZ="30"
+                    className="flex items-center gap-3 mt-auto"
+                  >
+                    <div className="relative w-8 h-8 rounded-full overflow-hidden bg-muted flex-shrink-0">
+                      <Image
+                        src={post.author.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(post.author.name)}&background=random`}
+                        alt={post.author.name}
+                        fill
+                        className="object-cover"
+                        sizes="32px"
+                      />
+                    </div>
+                    <div className="text-sm min-w-0">
+                      <p className="font-medium truncate">{post.author.name}</p>
+                      {post.author.bio && (
+                        <p className="text-muted-foreground line-clamp-1">
+                          {post.author.bio}
+                        </p>
+                      )}
+                    </div>
+                  </CardItem>
+                )}
+              </div>
+            </Link>
+          </CardBody>
+        </CardContainer>
+      );
+    }
+
+    // Featured layout (unchanged)
     return (
       <Link
         key={post.id}

@@ -159,7 +159,7 @@ export default function SiteMapPage() {
           <h2 className="text-2xl font-semibold mb-4">About This Site Map</h2>
           <p className="text-muted-foreground">
             This site map provides an overview of all the main sections and content available on {siteInfo.siteName}. 
-            If you're looking for something specific and can't find it here, try using our{" "}
+            If you&apos;re looking for something specific and can&apos;t find it here, try using our{" "}
             <Link href="/search" className="text-primary hover:underline">search function</Link> or{" "}
             <Link href="/contact" className="text-primary hover:underline">contact us</Link> for assistance.
           </p>

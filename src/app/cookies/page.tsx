@@ -52,7 +52,7 @@ export default function CookiesPage() {
             <h3 className="text-xl font-medium mb-3 mt-6">Analytics Cookies</h3>
             <p>
               These cookies help us understand how visitors interact with our website by collecting and reporting 
-              information anonymously. We use this data to improve our website's performance and user experience.
+              information anonymously. We use this data to improve our website&apos;s performance and user experience.
             </p>
             
             <h3 className="text-xl font-medium mb-3 mt-6">Functional Cookies</h3>
@@ -110,7 +110,7 @@ export default function CookiesPage() {
 
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Cookie Duration</h2>
-            <p>Cookies may be either "session" cookies or "persistent" cookies:</p>
+            <p>Cookies may be either &quot;session&quot; cookies or &quot;persistent&quot; cookies:</p>
             <ul className="list-disc pl-6 mt-4">
               <li><strong>Session Cookies:</strong> These are temporary and are deleted when you close your browser</li>
               <li><strong>Persistent Cookies:</strong> These remain on your device for a set period or until you delete them</li>

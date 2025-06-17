@@ -35,7 +35,7 @@
       "maxItems": 8,
       "columns": 4,
       "showTags": true,
-      "layout": "grid"
+      "layout": "card"
     }
   },
   "hotRanking": {
@@ -47,7 +47,7 @@
       "maxItems": 10,
       "showTrend": true,
       "showStats": true,
-      "layout": "list"
+      "layout": "grid"
     }
   },
   "categoryNav": {
@@ -56,7 +56,7 @@
     "props": {
       "title": "Browse by Category",
       "subtitle": "Find your favorite game type",
-      "layout": "grid",
+      "layout": "horizontal",
       "showCount": true,
       "columns": 5
     }
@@ -68,7 +68,7 @@
       "title": "Latest News & Guides",
       "subtitle": "Stay updated with game news and tips",
       "maxItems": 3,
-      "layout": "card",
+      "layout": "grid",
       "showExcerpt": true
     }
   },

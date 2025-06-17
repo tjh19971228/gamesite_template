@@ -16,6 +16,11 @@ export function GameGrid({
   gap = '6',
   loading = false,
   emptyMessage = "No games found",
+  showTags = true,
+  showRating = true,
+  showDescription = false,
+  layout = 'grid',
+  maxItems,
   className,
   ...props
 }: GameGridProps) {
@@ -37,24 +42,43 @@ export function GameGrid({
     '8': 'gap-8',
   };
 
+  // 根据 maxItems 限制游戏数量
+  const displayGames = maxItems ? games.slice(0, maxItems) : games;
+
   // Loading skeleton
   if (loading) {
     return (
       <div
         className={cn(
-          'grid',
-          gridClasses[columns as keyof typeof gridClasses] || gridClasses[4],
-          gapClasses[gap as keyof typeof gapClasses] || gapClasses['6'],
+          // 根据布局类型选择容器布局
+          layout === 'list' ? 'flex flex-col' : 'grid',
+          // 网格布局的列数设置（仅在非list布局时使用）
+          layout !== 'list' && (gridClasses[columns as keyof typeof gridClasses] || gridClasses[4]),
+          // gap设置，list布局使用空间分隔，grid布局使用网格gap
+          layout === 'list' ? 'space-y-4' : (gapClasses[gap as keyof typeof gapClasses] || gapClasses['6']),
           className
         )}
         {...props}
       >
-        {Array.from({ length: columns * 2 }).map((_, index) => (
-          <div key={index} className="space-y-4">
-            <Skeleton className="aspect-video w-full rounded-lg" />
-            <div className="space-y-2">
+        {Array.from({ length: layout === 'list' ? 6 : columns * 2 }).map((_, index) => (
+          <div key={index} className={cn(
+            layout === 'list' ? 'flex flex-row space-x-4' : 'space-y-4'
+          )}>
+            <Skeleton className={cn(
+              'rounded-lg',
+              layout === 'list' ? 'w-48 h-32 flex-shrink-0' : 'aspect-video w-full'
+            )} />
+            <div className={cn(
+              layout === 'list' ? 'flex-1 space-y-2' : 'space-y-2'
+            )}>
               <Skeleton className="h-4 w-3/4" />
               <Skeleton className="h-3 w-1/2" />
+              {layout === 'list' && (
+                <>
+                  <Skeleton className="h-3 w-full" />
+                  <Skeleton className="h-3 w-2/3" />
+                </>
+              )}
             </div>
           </div>
         ))}
@@ -96,23 +120,27 @@ export function GameGrid({
   return (
     <div
       className={cn(
-        'grid',
-        gridClasses[columns as keyof typeof gridClasses] || gridClasses[4],
-        gapClasses[gap as keyof typeof gapClasses] || gapClasses['6'],
+        // 根据布局类型选择容器布局
+        layout === 'list' ? 'flex flex-col' : 'grid',
+        // 网格布局的列数设置（仅在非list布局时使用）
+        layout !== 'list' && (gridClasses[columns as keyof typeof gridClasses] || gridClasses[4]),
+        // gap设置，list布局使用空间分隔，grid布局使用网格gap
+        layout === 'list' ? 'space-y-4' : (layout === 'card' ? 'gap-8' : (gapClasses[gap as keyof typeof gapClasses] || gapClasses['6'])),
         className
       )}
       {...props}
     >
-      {games.map((game, index) => (
+      {displayGames.map((game, index) => (
         <GameCard
           key={game.slug}
           game={game}
-          layout="grid"
-          showTags
-          showRating
+          layout={layout}
+          showTags={showTags}
+          showRating={showRating}
+          showDescription={showDescription}
           clickable
           priority={index < 4} // Priority loading for first 4 images
-          className="h-full"
+          className={layout === 'list' ? 'w-full' : 'h-full'}
         />
       ))}
     </div>

@@ -133,6 +133,9 @@ export default async function Homepage() {
                 games={newGamesData}
                 columns={(props.columns as number) || 4}
                 gap={(props.gap as string) || "6"}
+                maxItems={(props.maxItems as number)}
+                showTags={(props.showTags as boolean) ?? true}
+                layout={(props.layout as "grid" | "list" | "featured" | "card") || "grid"}
               />
             </div>
           </div>
@@ -148,6 +151,7 @@ export default async function Homepage() {
                 showTrend={(props.showTrend as boolean) ?? true}
                 showStats={(props.showStats as boolean) ?? true}
                 maxItems={(props.maxItems as number) || 6}
+                layout={(props.layout as 'list' | 'grid' | 'compact') || 'list'}
               />
             </div>
           </div>
@@ -202,9 +206,13 @@ export default async function Homepage() {
                 </p>
               </div>
               <GameGrid
-                games={popularGamesData.slice(0, (props.maxItems as number) || 6)}
-                columns={3}
-                gap="6"
+                games={popularGamesData}
+                columns={(props.columns as number) || 3}
+                gap={(props.gap as string) || "6"}
+                maxItems={(props.maxItems as number) || 6}
+                showTags={(props.showTags as boolean) ?? true}
+                layout={(props.layout as "grid" | "list" | "featured" | "card") || "featured"}
+                showDescription={(props.showDescription as boolean) ?? false}
               />
             </div>
           </div>

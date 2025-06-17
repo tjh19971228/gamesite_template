@@ -72,7 +72,7 @@ export function GameComments({
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           <span>{title}</span>
-          <Badge variant="secondary">{comments.length} 条评论</Badge>
+          <Badge variant="secondary">{comments.length} comments</Badge>
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -106,14 +106,14 @@ export function GameComments({
                   </p>
                   
                   {/* 点赞按钮 */}
-                  <div className="flex items-center gap-2">
+                  {/* <div className="flex items-center gap-2">
                     <Button variant="ghost" size="sm" className="h-7 px-2 text-xs">
                       👍 {comment.likes}
                     </Button>
                     <Button variant="ghost" size="sm" className="h-7 px-2 text-xs">
                       回复
                     </Button>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             );
@@ -129,7 +129,7 @@ export function GameComments({
           )}
           
           {/* 添加评论提示 */}
-          <div className="border-t pt-4 mt-6">
+          {/* <div className="border-t pt-4 mt-6">
             <div className="bg-muted/50 rounded-lg p-4 text-center">
               <p className="text-sm text-muted-foreground mb-3">
                 想要分享你的游戏体验吗？
@@ -138,7 +138,7 @@ export function GameComments({
                 发表评论
               </Button>
             </div>
-          </div>
+          </div> */}
         </div>
       </CardContent>
     </Card>

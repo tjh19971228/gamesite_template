@@ -2,41 +2,59 @@
 
 import React, { useState } from "react";
 import { Layout } from "@/components/layout";
-import { getSiteInfo } from "@/lib/siteConfig";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Mail, MessageSquare, HelpCircle, Bug, CheckCircle } from "lucide-react";
-
-
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Mail,
+  MessageSquare,
+  HelpCircle,
+  Bug,
+  CheckCircle,
+} from "lucide-react";
 
 export default function ContactPage() {
-  const siteInfo = getSiteInfo();
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    subject: '',
-    category: '',
-    message: ''
+    firstName: "",
+    lastName: "",
+    email: "",
+    subject: "",
+    category: "",
+    message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Basic validation
-    if (!formData.firstName || !formData.lastName || !formData.email || !formData.subject || !formData.message) {
+    if (
+      !formData.firstName ||
+      !formData.lastName ||
+      !formData.email ||
+      !formData.subject ||
+      !formData.message
+    ) {
       alert("Please fill in all required fields");
       return;
     }
@@ -52,27 +70,26 @@ export default function ContactPage() {
 
     try {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       // Show success message
       setShowSuccess(true);
-      
+
       // Reset form
       setFormData({
-        firstName: '',
-        lastName: '',
-        email: '',
-        subject: '',
-        category: '',
-        message: ''
+        firstName: "",
+        lastName: "",
+        email: "",
+        subject: "",
+        category: "",
+        message: "",
       });
 
       // Hide success message after 5 seconds
       setTimeout(() => {
         setShowSuccess(false);
       }, 5000);
-
-    } catch (error) {
+    } catch {
       alert("Failed to send message. Please try again.");
     } finally {
       setIsSubmitting(false);
@@ -101,7 +118,8 @@ export default function ContactPage() {
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl font-bold mb-4 text-center">Contact Us</h1>
           <p className="text-lg text-muted-foreground text-center mb-12">
-            We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+            We&apos;d love to hear from you. Send us a message and we&apos;ll
+            respond as soon as possible.
           </p>
 
           <div className="grid lg:grid-cols-2 gap-12">
@@ -110,71 +128,87 @@ export default function ContactPage() {
               <CardHeader>
                 <CardTitle>Send us a message</CardTitle>
                 <CardDescription>
-                  Fill out the form below and we'll get back to you within 24 hours.
+                  Fill out the form below and we&apos;ll get back to you within
+                  24 hours.
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <form className="space-y-6" onSubmit={handleSubmit}>
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="firstName" className="block text-sm font-medium mb-2">
+                      <label
+                        htmlFor="firstName"
+                        className="block text-sm font-medium mb-2"
+                      >
                         First Name *
                       </label>
-                      <Input 
-                        id="firstName" 
-                        name="firstName" 
+                      <Input
+                        id="firstName"
+                        name="firstName"
                         value={formData.firstName}
                         onChange={handleInputChange}
-                        required 
+                        required
                       />
                     </div>
                     <div>
-                      <label htmlFor="lastName" className="block text-sm font-medium mb-2">
+                      <label
+                        htmlFor="lastName"
+                        className="block text-sm font-medium mb-2"
+                      >
                         Last Name *
                       </label>
-                      <Input 
-                        id="lastName" 
-                        name="lastName" 
+                      <Input
+                        id="lastName"
+                        name="lastName"
                         value={formData.lastName}
                         onChange={handleInputChange}
-                        required 
+                        required
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium mb-2">
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-medium mb-2"
+                    >
                       Email Address *
                     </label>
-                    <Input 
-                      id="email" 
-                      name="email" 
-                      type="email" 
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      required 
+                      required
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="subject" className="block text-sm font-medium mb-2">
+                    <label
+                      htmlFor="subject"
+                      className="block text-sm font-medium mb-2"
+                    >
                       Subject *
                     </label>
-                    <Input 
-                      id="subject" 
-                      name="subject" 
+                    <Input
+                      id="subject"
+                      name="subject"
                       value={formData.subject}
                       onChange={handleInputChange}
-                      required 
+                      required
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="category" className="block text-sm font-medium mb-2">
+                    <label
+                      htmlFor="category"
+                      className="block text-sm font-medium mb-2"
+                    >
                       Category
                     </label>
-                    <select 
-                      id="category" 
+                    <select
+                      id="category"
                       name="category"
                       value={formData.category}
                       onChange={handleInputChange}
@@ -191,23 +225,30 @@ export default function ContactPage() {
                   </div>
 
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium mb-2">
+                    <label
+                      htmlFor="message"
+                      className="block text-sm font-medium mb-2"
+                    >
                       Message *
                     </label>
-                    <Textarea 
-                      id="message" 
-                      name="message" 
+                    <Textarea
+                      id="message"
+                      name="message"
                       rows={6}
                       placeholder="Please describe your inquiry in detail..."
                       value={formData.message}
                       onChange={handleInputChange}
-                      required 
+                      required
                     />
                   </div>
 
-                  <Button type="submit" className="w-full" disabled={isSubmitting}>
+                  <Button
+                    type="submit"
+                    className="w-full"
+                    disabled={isSubmitting}
+                  >
                     <Mail className="w-4 h-4 mr-2" />
-                    {isSubmitting ? 'Sending...' : 'Send Message'}
+                    {isSubmitting ? "Sending..." : "Send Message"}
                   </Button>
                 </form>
               </CardContent>
@@ -267,25 +308,33 @@ export default function ContactPage() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
-                    <h4 className="font-medium mb-2">How do I report a problem with a game?</h4>
+                    <h4 className="font-medium mb-2">
+                      How do I report a problem with a game?
+                    </h4>
                     <p className="text-sm text-muted-foreground">
-                      Use the contact form above and select "Bug Report" as the category. 
-                      Please include details about what you were doing when the problem occurred.
+                      Use the contact form above and select &quot;Bug
+                      Report&quot; as the category. Please include details about
+                      what you were doing when the problem occurred.
                     </p>
                   </div>
-                  
+
                   <div>
-                    <h4 className="font-medium mb-2">Can I suggest new games for the platform?</h4>
+                    <h4 className="font-medium mb-2">
+                      Can I suggest new games for the platform?
+                    </h4>
                     <p className="text-sm text-muted-foreground">
-                      Absolutely! We love hearing from our community. Send us your suggestions 
-                      using the "Feedback" category.
+                      Absolutely! We love hearing from our community. Send us
+                      your suggestions using the &quot;Feedback&quot; category.
                     </p>
                   </div>
-                  
+
                   <div>
-                    <h4 className="font-medium mb-2">How quickly will I receive a response?</h4>
+                    <h4 className="font-medium mb-2">
+                      How quickly will I receive a response?
+                    </h4>
                     <p className="text-sm text-muted-foreground">
-                      We aim to respond to all inquiries within 24 hours during business days.
+                      We aim to respond to all inquiries within 24 hours during
+                      business days.
                     </p>
                   </div>
                 </CardContent>
@@ -312,7 +361,9 @@ export default function ContactPage() {
                     </li>
                     <li className="flex justify-between">
                       <span>Partnership Inquiries:</span>
-                      <span className="text-muted-foreground">3-5 business days</span>
+                      <span className="text-muted-foreground">
+                        3-5 business days
+                      </span>
                     </li>
                   </ul>
                 </CardContent>
@@ -323,4 +374,4 @@ export default function ContactPage() {
       </div>
     </Layout>
   );
-} 
+}

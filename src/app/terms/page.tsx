@@ -78,7 +78,7 @@ export default function TermsPage() {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">6. Disclaimer of Warranties</h2>
             <p>
-              The information on this website is provided on an "as is" basis. To the fullest extent permitted by law, 
+              The information on this website is provided on an &quot;as is&quot; basis. To the fullest extent permitted by law, 
               this Company excludes all representations, warranties, conditions and terms whether express or implied.
             </p>
           </section>

@@ -22,7 +22,7 @@
     "categoryGrid": {
       "enabled": true,
       "order": 2,
-      "layout": "grid",
+      "layout": "effect-card",
       "columns": 3,
       "gap": "6",
       "showGameCount": true,
@@ -42,17 +42,20 @@
       "enabled": true,
       "order": 4,
       "title": "All Categories",
-      "layout": "list",
+      "layout": "expandable-card-grid",
       "showGameCount": true,
       "showDescription": true,
-      "sortBy": "name"
+      "sortBy": "name",
+      "maxPreviewGames": 3
     },
     "recentlyUpdated": {
       "enabled": true,
       "order": 5,
       "title": "Recently Updated Categories",
+      "layout": "expandable-card",
       "maxCategories": 4,
-      "showLastUpdated": true
+      "showLastUpdated": true,
+      "maxPreviewGames": 3
     }
   },
   "display": {

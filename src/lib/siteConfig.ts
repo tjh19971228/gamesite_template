@@ -1,10 +1,13 @@
-let siteConfigData: any;
+import siteConfigJson from '../../siteconfig.json';
+
+let siteConfigData: SiteConfig;
 
 try {
-  siteConfigData = require('../../siteconfig.json');
+  siteConfigData = siteConfigJson as SiteConfig;
 } catch (error) {
   console.warn('Failed to load siteconfig.json:', error);
-  siteConfigData = null;
+  // 使用默认配置而不是 null，避免类型错误
+  siteConfigData = {} as SiteConfig;
 }
 
 export interface SiteConfig {

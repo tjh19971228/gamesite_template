@@ -178,6 +178,11 @@ export interface GameGridProps extends BaseComponentProps {
   gap?: string;
   loading?: boolean;
   emptyMessage?: string;
+  showTags?: boolean;
+  showRating?: boolean;
+  showDescription?: boolean;
+  layout?: LayoutType;
+  maxItems?: number;
 }
 
 export interface HeroSectionProps extends BaseComponentProps {
