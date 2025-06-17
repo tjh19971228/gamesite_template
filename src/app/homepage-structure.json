@@ -7,7 +7,7 @@
       "subtitle": "Play the best online games for free",
       "description": "Join millions of players worldwide and experience the most exciting online games. No downloads required - start playing instantly!",
       "height": "lg",
-      "showVideo": false,
+      "showVideo": true,
       "backgroundImage": "https://picsum.photos/seed/hero/1920/1080",
       "backgroundVideo": "https://cdn.pixabay.com/video/2025/04/29/275498_large.mp4",
       "ctaButtons": [

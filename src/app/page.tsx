@@ -89,6 +89,8 @@ export default async function Homepage() {
               (props.backgroundImage as string) ||
               "https://picsum.photos/seed/hero/1920/1080"
             }
+            backgroundVideo={props.backgroundVideo as string}
+            showVideo={(props.showVideo as boolean) ?? false}
             ctaButtons={
               (props.ctaButtons as { text: string; href: string; variant: string; size: string }[])?.map((button) => ({
                 ...button,
