@@ -9,6 +9,7 @@
       "height": "lg",
       "showVideo": false,
       "backgroundImage": "https://picsum.photos/seed/hero/1920/1080",
+      "backgroundVideo": "https://cdn.pixabay.com/video/2025/04/29/275498_large.mp4",
       "ctaButtons": [
         {
           "text": "Play Now",
