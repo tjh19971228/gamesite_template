@@ -1,0 +1,55 @@
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Game Categories - Browse by Genre | GameSite",
+  "description": "Explore games by category - Action, Adventure, Puzzle, Sports and more",
+  "url": "https://italianbrainrot-games.github.io/categories",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Italian Brainrot Games",
+    "url": "https://italianbrainrot-games.github.io"
+  },
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://italianbrainrot-games.github.io"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Categories",
+        "item": "https://italianbrainrot-games.github.io/categories"
+      }
+    ]
+  },
+  "mainEntity": {
+    "@type": "ItemList",
+    "name": "Game Categories Collection",
+    "description": "Collection of all game categories available on our platform",
+    "numberOfItems": "{categoryCount}",
+    "itemListElement": [
+      {
+        "@type": "Thing",
+        "name": "Action Games",
+        "description": "Fast-paced games with exciting gameplay",
+        "url": "https://italianbrainrot-games.github.io/category/action"
+      },
+      {
+        "@type": "Thing", 
+        "name": "Adventure Games",
+        "description": "Explore new worlds and embark on epic journeys",
+        "url": "https://italianbrainrot-games.github.io/category/adventure"
+      },
+      {
+        "@type": "Thing",
+        "name": "Puzzle Games", 
+        "description": "Challenge your mind with brain-teasing puzzles",
+        "url": "https://italianbrainrot-games.github.io/category/puzzle"
+      }
+    ]
+  }
+} 

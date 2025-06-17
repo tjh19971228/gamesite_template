@@ -1,12 +1,41 @@
 {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  "name": "",
-  "description": "",
-  "url": "",
+  "name": "{categoryName} Games",
+  "description": "Play the best {categoryName} games online for free",
+  "url": "https://italianbrainrot-games.github.io/category/{categorySlug}",
   "isPartOf": {
     "@type": "WebSite",
     "name": "Italian Brainrot Games",
     "url": "https://italianbrainrot-games.github.io"
+  },
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://italianbrainrot-games.github.io"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Categories",
+        "item": "https://italianbrainrot-games.github.io/categories"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "{categoryName}",
+        "item": "https://italianbrainrot-games.github.io/category/{categorySlug}"
+      }
+    ]
+  },
+  "mainEntity": {
+    "@type": "ItemList",
+    "name": "{categoryName} Games Collection",
+    "description": "Collection of {categoryName} games available to play online",
+    "numberOfItems": "{gameCount}"
   }
 } 

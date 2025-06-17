@@ -11,11 +11,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { 
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
+import { SchemaOrg } from '@/components/SchemaOrg';
 import { categories, getAllGames } from "@/lib/data";
 import {
   getCategoriesPageStructure,
   sortComponentsByOrder,
 } from "@/lib/config";
+import { getCategoryListSchema } from '@/lib/schema';
 import { CategoriesPageStructure } from "@/types";
 
 interface CategoriesPageConfig {
@@ -91,6 +101,9 @@ export default async function CategoriesPage() {
         return a.name.localeCompare(b.name);
     }
   });
+
+  // 获取分类列表页结构化数据
+  const schemaData = await getCategoryListSchema();
 
   // Sort components by order
   const sortedComponents = sortComponentsByOrder(
@@ -441,6 +454,29 @@ export default async function CategoriesPage() {
 
   return (
     <Layout>
+      <SchemaOrg data={schemaData} />
+      
+      {/* 面包屑导航 */}
+      {page.showBreadcrumb && (
+        <div className="bg-muted/20 border-b">
+          <div className="container mx-auto px-4 py-3">
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link href="/">Home</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Categories</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </div>
+        </div>
+      )}
+
       {/* Render components in order */}
       {sortedComponents.map(([componentName, config]) =>
         renderComponent(componentName, config as CategoriesPageConfig)

@@ -15,6 +15,14 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { 
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
+import { 
   categories,
   getGamesByCategory,
   getCategoryBySlug 
@@ -95,6 +103,33 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       <SchemaOrg data={schemaData} />
       
       <Layout>
+        {/* 面包屑导航 */}
+        {config.page?.showBreadcrumb && (
+          <div className="bg-muted/20 border-b">
+            <div className="container mx-auto px-4 py-3">
+              <Breadcrumb>
+                <BreadcrumbList>
+                  <BreadcrumbItem>
+                    <BreadcrumbLink asChild>
+                      <Link href="/">Home</Link>
+                    </BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    <BreadcrumbLink asChild>
+                      <Link href="/categories">Categories</Link>
+                    </BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    <BreadcrumbPage>{category.name}</BreadcrumbPage>
+                  </BreadcrumbItem>
+                </BreadcrumbList>
+              </Breadcrumb>
+            </div>
+          </div>
+        )}
+        
         {/* Category Hero Section */}
         {config.sections.pageHeader?.enabled && (
           <div className="text-white py-12" style={{

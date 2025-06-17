@@ -18,7 +18,7 @@ import {
   getAllBlogPosts,
   getRecentBlogPosts
 } from '@/lib/data';
-import { getBlogPostDetailStructure } from '@/lib/config';
+import { getBlogPostDetailStructure, sortComponentsByOrder } from '@/lib/config';
 import { SchemaOrg } from '@/components/SchemaOrg';
 import { getBlogPostSchema } from '@/lib/schema';
 import { BlogPostDetailStructure } from '@/types';
@@ -128,19 +128,50 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   // 获取博客文章结构化数据
   const schemaData = await getBlogPostSchema(post as Record<string, unknown>);
 
-  return (
-    <>
-      {/* 添加结构化数据 */}
-      <SchemaOrg data={schemaData} />
-      
-      <Layout>
-        {/* Article Header */}
-        {config.sections.pageHeader?.enabled && (
-          <div className="bg-gradient-to-r from-emerald-600 to-blue-600 text-white py-12">
+  // Sort components by order
+  const sortedComponents = sortComponentsByOrder(
+    config.sections as {
+      [key: string]: {
+        enabled: boolean;
+        order: number;
+        props: Record<string, unknown>;
+      };
+    }
+  );
+
+  // Component rendering function
+  const renderComponent = (componentName: string, componentConfig: unknown): React.ReactNode => {
+    const config = componentConfig as { 
+      enabled?: boolean; 
+      order?: number; 
+      title?: string;
+      subtitle?: string;
+      maxPosts?: number;
+      showAuthor?: boolean;
+      showDate?: boolean;
+      showExcerpt?: boolean;
+      showViewAllButton?: boolean;
+      showCategory?: boolean;
+      showTitle?: boolean;
+      showMeta?: boolean;
+      showReadTime?: boolean;
+      showTags?: boolean;
+      showFeaturedImage?: boolean;
+      showFollowButton?: boolean;
+      showProfileButton?: boolean;
+      [key: string]: unknown; 
+    };
+
+    if (!config?.enabled) return null;
+
+    switch (componentName) {
+      case 'pageHeader':
+        return (
+          <div key={componentName} className="bg-gradient-to-r from-emerald-600 to-blue-600 text-white py-12">
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto">
                 {/* Category Badge */}
-                {config.sections.pageHeader.showCategory && (
+                {config.showCategory && (
                   <div className="mb-4">
                     <Badge variant="secondary" className="bg-white/20 text-white text-sm">
                       {post.category}
@@ -149,24 +180,24 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 )}
                 
                 {/* Title */}
-                {config.sections.pageHeader.showTitle && (
+                {config.showTitle && (
                   <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
                     {post.title}
                   </h1>
                 )}
                 
                 {/* Excerpt */}
-                {config.sections.pageHeader.showExcerpt && (
+                {config.showExcerpt && (
                   <p className="text-xl opacity-90 mb-8 leading-relaxed">
                     {post.excerpt}
                   </p>
                 )}
                 
                 {/* Meta Information */}
-                {config.sections.pageHeader.showMeta && (
+                {config.showMeta && (
                   <div className="flex flex-wrap items-center gap-6 text-sm">
                     {/* Author */}
-                    {config.sections.pageHeader.showAuthor && (
+                    {config.showAuthor && (
                       <div className="flex items-center gap-3">
                         <Avatar className="h-10 w-10 border-2 border-white/20">
                           <AvatarImage src={post.author.avatar} alt={post.author.name} />
@@ -182,7 +213,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     )}
                     
                     {/* Published Date */}
-                    {config.sections.pageHeader.showDate && (
+                    {config.showDate && (
                       <div className="flex items-center gap-2">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -196,7 +227,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     )}
                     
                     {/* Reading Time */}
-                    {config.sections.pageHeader.showReadTime && (
+                    {config.showReadTime && (
                       <div className="flex items-center gap-2">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -206,7 +237,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     )}
                     
                     {/* Tags */}
-                    {config.sections.pageHeader.showTags && post.tags.length > 0 && (
+                    {config.showTags && post.tags.length > 0 && (
                       <div className="flex items-center gap-2">
                         <span>🏷️</span>
                         <div className="flex gap-1">
@@ -223,111 +254,271 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               </div>
             </div>
           </div>
-        )}
+        );
 
-        {/* Featured Image */}
-        {config.sections.featuredImage?.enabled && post.featuredImage && (
-          <div className="py-8">
+      case 'content':
+        return (
+          <div key={componentName}>
+            {/* Featured Image */}
+            {config.showFeaturedImage && post.featuredImage && (
+              <div className="py-8">
+                <div className="container mx-auto px-4">
+                  <div className="max-w-4xl mx-auto">
+                    <div className="aspect-video rounded-lg overflow-hidden">
+                      <Image
+                        src={post.featuredImage}
+                        alt={post.title}
+                        width={1024}
+                        height={576}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Article Content */}
+            <div className="py-12">
+              <div className="container mx-auto px-4">
+                <div className="max-w-4xl mx-auto">
+                  <div className="prose prose-lg max-w-none">
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      rehypePlugins={[rehypeRaw]}
+                      components={{
+                        a: CustomLink,
+                        img: ({ src, alt }) => {
+                          if (!src || typeof src !== 'string') return null;
+                          return (
+                            <Image
+                              src={src}
+                              alt={alt || ''}
+                              width={800}
+                              height={450}
+                              className="rounded-lg"
+                            />
+                          );
+                        },
+                      }}
+                    >
+                      {post.content}
+                    </ReactMarkdown>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 'tags':
+        return (
+          <div key={componentName} className="py-8 bg-muted/30">
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto">
-                <div className="aspect-video rounded-lg overflow-hidden">
-                  <Image
-                    src={post.featuredImage}
-                    alt={post.title}
-                    width={1024}
-                    height={576}
-                    className="w-full h-full object-cover"
-                  />
+                <h3 className="text-xl font-semibold mb-4">
+                  {config.title || 'Tags'}
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {post.tags.map((tag) => (
+                    <Badge key={tag} variant="outline" className="text-sm">
+                      {tag}
+                    </Badge>
+                  ))}
                 </div>
               </div>
             </div>
           </div>
-        )}
+        );
 
-        {/* Article Content */}
-        <div className="py-12">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <div className="prose prose-lg max-w-none">
-                <ReactMarkdown
-                  remarkPlugins={[remarkGfm]}
-                  rehypePlugins={[rehypeRaw]}
-                  components={{
-                    a: CustomLink,
-                    img: ({ src, alt }) => {
-                      if (!src || typeof src !== 'string') return null;
-                      return (
-                        <Image
-                          src={src}
-                          alt={alt || ''}
-                          width={800}
-                          height={450}
-                          className="rounded-lg"
-                        />
-                      );
-                    },
-                  }}
-                >
-                  {post.content}
-                </ReactMarkdown>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <Separator />
-
-        {/* Article Actions */}
-        <div className="py-8 bg-muted/30">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <div className="flex flex-col md:flex-row gap-6 items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <Button variant="default" size="sm" className="bg-primary text-white hover:bg-primary/90">
-                    👍 Like ({Math.floor(Math.random() * 20) + 5})
-                  </Button>
-                  <Button variant="default" size="sm" className="bg-emerald-600 text-white hover:bg-emerald-700">
-                    💬 Comments ({Math.floor(Math.random() * 10) + 2})
-                  </Button>
-                  <ShareButton title={post.title} />
-                </div>
-                
-                <div className="flex items-center gap-4">
-                  <span className="text-sm text-muted-foreground">
-                    Published: {publishedDate.toLocaleDateString()}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Related Posts */}
-        {config.sections.relatedPosts?.enabled && recentPosts.length > 0 && (
-          <div className="py-16">
+      case 'authorBio':
+        return (
+          <div key={componentName} className="py-12 bg-muted/50">
             <div className="container mx-auto px-4">
-              <div className="max-w-6xl mx-auto">
-                <div className="text-center mb-12">
-                  <h2 className="text-3xl font-bold mb-4">
-                    {config.sections.relatedPosts.title || "Related Articles"}
-                  </h2>
+              <div className="max-w-4xl mx-auto">
+                <div className="flex items-start gap-6 p-6 bg-white rounded-lg shadow-sm">
+                  <Avatar className="h-16 w-16">
+                    <AvatarImage src={post.author.avatar} alt={post.author.name} />
+                    <AvatarFallback>
+                      {post.author.name.split(' ').map(n => n[0]).join('')}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-semibold mb-2">{post.author.name}</h3>
+                    <p className="text-muted-foreground mb-2">{post.author.role}</p>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      {post.author.bio || `${post.author.name} is a gaming enthusiast and content creator with extensive experience in the gaming industry.`}
+                    </p>
+                    <div className="flex gap-3">
+                      {config.showFollowButton && (
+                        <Button size="sm" variant="outline">
+                          Follow
+                        </Button>
+                      )}
+                      {config.showProfileButton && (
+                        <Button size="sm" variant="outline">
+                          View Profile
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 'sharing':
+        return (
+          <div key={componentName} className="py-8 bg-muted/30">
+            <div className="container mx-auto px-4">
+              <div className="max-w-4xl mx-auto">
+                <div className="text-center mb-6">
+                  <h3 className="text-xl font-semibold mb-2">
+                    {config.title || 'Share this Article'}
+                  </h3>
                   <p className="text-muted-foreground">
-                    Continue reading with these related posts
+                    Help others discover this content
                   </p>
                 </div>
-
-                <BlogEntry
-                  posts={recentPosts}
-                  layout="grid"
-                  maxPosts={config.sections.relatedPosts.maxPosts || 3}
-                  showAuthor={config.sections.relatedPosts.showAuthor}
-                  showDate={config.sections.relatedPosts.showDate}
-                  showExcerpt={config.sections.relatedPosts.showExcerpt}
-                />
+                <div className="flex flex-col md:flex-row gap-6 items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <Button variant="default" size="sm" className="bg-primary text-white hover:bg-primary/90">
+                      👍 Like ({Math.floor(Math.random() * 20) + 5})
+                    </Button>
+                    <Button variant="default" size="sm" className="bg-emerald-600 text-white hover:bg-emerald-700">
+                      💬 Comments ({Math.floor(Math.random() * 10) + 2})
+                    </Button>
+                    <ShareButton title={post.title} />
+                  </div>
+                  
+                  <div className="flex items-center gap-4">
+                    <span className="text-sm text-muted-foreground">
+                      Published: {publishedDate.toLocaleDateString()}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+        );
+
+      case 'tableOfContents':
+        return (
+          <div key={componentName} className="py-12 bg-muted/50">
+            <div className="container mx-auto px-4">
+              <div className="max-w-4xl mx-auto">
+                <div className="bg-white p-6 rounded-lg shadow-sm">
+                  <h3 className="text-xl font-semibold mb-4">
+                    {config.title || 'Table of Contents'}
+                  </h3>
+                  <nav className="space-y-2">
+                    <ul className="space-y-2 text-sm">
+                      <li>
+                        <a href="#introduction" className="text-blue-600 hover:text-blue-800">
+                          Introduction
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#main-content" className="text-blue-600 hover:text-blue-800">
+                          Main Content
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#conclusion" className="text-blue-600 hover:text-blue-800">
+                          Conclusion
+                        </a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 'newsletter':
+        return (
+          <div key={componentName} className="py-16 bg-gradient-to-r from-blue-600 to-emerald-600 text-white">
+            <div className="container mx-auto px-4">
+              <div className="max-w-4xl mx-auto text-center">
+                <h3 className="text-3xl font-bold mb-4">
+                  {config.title || 'Stay Updated'}
+                </h3>
+                <p className="text-xl opacity-90 mb-8">
+                  {config.subtitle || 'Get the latest gaming news and articles delivered to your inbox'}
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                  <input
+                    type="email"
+                    placeholder="Enter your email"
+                    className="flex-1 px-4 py-2 rounded-lg text-gray-900"
+                  />
+                  <Button className="bg-white text-blue-600 hover:bg-gray-100">
+                    Subscribe
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 'relatedArticles':
+        if (recentPosts.length === 0) return null;
+        
+        return (
+          <div key={componentName} className="py-16">
+            <div className="container mx-auto px-4">
+              <div className="max-w-6xl mx-auto">
+                                  <div className="text-center mb-12">
+                    <h2 className="text-3xl font-bold mb-4">
+                      {config.title || "Related Articles"}
+                    </h2>
+                    <p className="text-muted-foreground">
+                      {config.subtitle || "Continue reading with these related posts"}
+                    </p>
+                  </div>
+
+                                  <BlogEntry
+                    posts={recentPosts}
+                    layout="grid"
+                    maxPosts={config.maxPosts || 3}
+                    showAuthor={config.showAuthor}
+                    showDate={config.showDate}
+                    showExcerpt={config.showExcerpt}
+                  />
+
+                {config.showViewAllButton && (
+                  <div className="text-center mt-8">
+                    <Button asChild variant="outline" size="lg">
+                      <Link href="/blog">
+                        View All Articles
+                      </Link>
+                    </Button>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <>
+      {/* 添加结构化数据 */}
+      <SchemaOrg data={schemaData} />
+      
+      <Layout>
+        {/* Render components in order */}
+        {sortedComponents.map(([componentName, config]) => 
+          renderComponent(componentName, config)
         )}
+
+        <Separator />
 
         {/* Back to Blog */}
         <div className="py-8 bg-muted/30">

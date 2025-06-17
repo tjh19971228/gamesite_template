@@ -1,26 +1,56 @@
 {
   "@context": "https://schema.org",
-  "@type": "VideoGame",
-  "name": "",
-  "description": "",
-  "genre": "",
-  "playMode": "SinglePlayer",
-  "applicationCategory": "Game",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "USD",
-    "availability": "https://schema.org/InStock"
+  "@type": "WebPage",
+  "name": "{gameTitle} - Free Online Game",
+  "description": "Play {gameTitle} online for free. {gameDescription}",
+  "url": "https://italianbrainrot-games.github.io/game/{gameSlug}",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Italian Brainrot Games",
+    "url": "https://italianbrainrot-games.github.io"
   },
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "",
-    "reviewCount": "",
-    "bestRating": "5",
-    "worstRating": "1"
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://italianbrainrot-games.github.io"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Games",
+        "item": "https://italianbrainrot-games.github.io/games"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "{categoryName}",
+        "item": "https://italianbrainrot-games.github.io/category/{categorySlug}"
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": "{gameTitle}",
+        "item": "https://italianbrainrot-games.github.io/game/{gameSlug}"
+      }
+    ]
   },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Italian Brainrot Games"
+  "mainEntity": {
+    "@type": "Game",
+    "name": "{gameTitle}",
+    "description": "{gameDescription}",
+    "genre": "{gameCategory}",
+    "gamePlatform": "Web Browser",
+    "applicationCategory": "Game",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    }
   }
 } 

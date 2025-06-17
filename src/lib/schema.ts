@@ -183,6 +183,13 @@ export async function getCategorySchema(categoryData: Record<string, unknown>): 
 }
 
 /**
+ * 获取分类列表页结构化数据
+ */
+export async function getCategoryListSchema(): Promise<CollectionPageSchema | null> {
+  return loadSchemaData<CollectionPageSchema>('src/app/categories/schema.json');
+}
+
+/**
  * 清除结构化数据缓存
  */
 export function clearSchemaCache(): void {
