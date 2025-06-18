@@ -12,8 +12,7 @@
   "page": {
     "title": "Gaming Blog",
     "subtitle": "Latest news, reviews, and insights from the gaming world",
-    "showBreadcrumb": true,
-    "showSearch": true
+    "showBreadcrumb": true
   },
   "sections": {
     "pageHeader": {
@@ -22,7 +21,7 @@
       "showTitle": true,
       "showSubtitle": true,
       "showSearch": true,
-      "backgroundType": "gradient"
+      "backgroundType": "image"
     },
     "featuredPosts": {
       "enabled": true,
@@ -37,7 +36,6 @@
     "categoryFilter": {
       "enabled": true,
       "order": 3,
-      "showAllCategories": true,
       "layout": "horizontal"
     },
     "recentPosts": {
@@ -56,13 +54,21 @@
       "order": 5,
       "position": "right",
       "components": {
+        "mainContent": {
+          "enabled": true,
+          "type": "statistics",
+          "title": "Blog Statistics",
+          "maxPosts": 6,
+          "showSearch": true,
+          "showFilters": false
+        },
         "popularPosts": {
           "enabled": true,
           "title": "Popular Posts",
           "maxPosts": 5
         },
         "categories": {
-          "enabled": true,
+          "enabled": false,
           "title": "Categories",
           "showCount": true
         },

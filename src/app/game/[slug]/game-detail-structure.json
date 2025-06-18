@@ -12,7 +12,7 @@
     "gameHero": {
       "enabled": true,
       "order": 1,
-      "backgroundType": "gradient"
+      "backgroundType": "image"
     },
     "gameInfo": {
       "enabled": true,
@@ -31,7 +31,7 @@
     },
     "gameControls": {
       "enabled": true,
-      "order": 1
+      "order": 5
     },
     "screenshotGallery": {
       "enabled": true,

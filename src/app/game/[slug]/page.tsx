@@ -44,13 +44,23 @@ interface GamePageProps {
 interface SectionConfig {
   enabled: boolean;
   order: number;
-  title: string;
-  maxImages: number;
-  maxComments: number;
-  maxItems: number;
-  showTags: boolean;
-  showCategory: boolean;
-  showStats: boolean;
+  title?: string;
+  maxImages?: number;
+  maxComments?: number;
+  maxItems?: number;
+  showTags?: boolean;
+  showCategory?: boolean;
+  showStats?: boolean;
+  backgroundType?: string;
+}
+
+/**
+ * 应用模板字符串替换
+ */
+function applyTemplate(template: string, replacements: Record<string, string>): string {
+  return template.replace(/\{(\w+)\}/g, (match, key) => {
+    return replacements[key] || match;
+  });
 }
 
 /**
@@ -70,23 +80,46 @@ export async function generateMetadata({
     };
   }
 
+  // 获取配置中的metadata模板
+  const config = await getGameDetailStructure();
+  const category = getCategoryBySlug(
+    game.category.toLowerCase().replace(/\s+/g, "-")
+  );
+
+  // 准备替换数据
+  const replacements = {
+    gameTitle: game.title,
+    gameDescription: game.description || game.shortDescription || "",
+    gameCategory: category?.name || game.category,
+  };
+
+  // 应用模板
+  const title = config.metadata?.title 
+    ? applyTemplate(config.metadata.title, replacements)
+    : `${game.title} - Free Online Game | GameSite`;
+    
+  const description = config.metadata?.description
+    ? applyTemplate(config.metadata.description, replacements)
+    : game.description || game.shortDescription || `Play ${game.title} online for free`;
+
+  const keywords = config.metadata?.keywords?.map(keyword => 
+    applyTemplate(keyword, replacements)
+  ) || [game.title, ...game.tags, game.category, "free online game"];
+
   return {
-    title: `${game.title} - Free Online Game | GameSite`,
-    description:
-      game.description ||
-      game.shortDescription ||
-      `Play ${game.title} online for free`,
-    keywords: [game.title, ...game.tags, game.category, "free online game"],
+    title,
+    description,
+    keywords,
     openGraph: {
       title: game.title,
-      description: game.description || game.shortDescription,
+      description,
       images: game.images.length > 0 ? [game.images[0]] : [],
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
       title: game.title,
-      description: game.description || game.shortDescription,
+      description,
       images: game.images.length > 0 ? [game.images[0]] : [],
     },
   };
@@ -137,6 +170,16 @@ export default async function GameDetailPage({ params }: GamePageProps) {
     game as unknown as Record<string, unknown>
   );
 
+  // 准备页面标题替换数据
+  const pageReplacements = {
+    gameTitle: game.title,
+  };
+
+  // 应用页面标题模板
+  const pageTitle = config.page?.title 
+    ? applyTemplate(config.page.title, pageReplacements)
+    : game.title;
+
   // 根据order排序sections
   const sortedSections = Object.entries(config.sections || {})
     .filter(([, sectionConfig]) => sectionConfig?.enabled)
@@ -148,20 +191,43 @@ export default async function GameDetailPage({ params }: GamePageProps) {
 
     switch (sectionName) {
       case "gameHero":
+        // 根据backgroundType设置背景样式
+        const getBackgroundStyle = () => {
+          switch (sectionConfig.backgroundType) {
+            case "gradient":
+              return {
+                background: `linear-gradient(to right, rgb(var(--color-primary-500)) 0%, rgb(var(--color-secondary-500)) 100%)`,
+                backdropFilter: "blur(4px)",
+              };
+            case "solid":
+              return {
+                background: `rgb(var(--color-primary-500))`,
+              };
+            case "image":
+              return {
+                backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${game.images[0] || game.thumbnail})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              };
+            default:
+              return {
+                background: `linear-gradient(to right, rgb(var(--color-primary-500)) 0%, rgb(var(--color-secondary-500)) 100%)`,
+                backdropFilter: "blur(4px)",
+              };
+          }
+        };
+
         return (
           <div
             key="gameHero"
             className="text-white py-4 md:py-8"
-            style={{
-              background: `linear-gradient(to right, rgb(var(--color-primary-500)) 0%, rgb(var(--color-secondary-500)) 100%)`,
-              backdropFilter: "blur(4px)",
-            }}
+            style={getBackgroundStyle()}
           >
             <div className="container mx-auto px-4">
               {/* 移动端：只显示标题，隐藏图片 */}
               <div className="md:hidden text-center py-2">
                 <h1 className="text-xl font-bold text-white mb-1">
-                  {game.title}
+                  {pageTitle}
                 </h1>
                 <p className="text-sm text-white/80 line-clamp-1">
                   {game.shortDescription || game.description}
@@ -191,7 +257,7 @@ export default async function GameDetailPage({ params }: GamePageProps) {
                 <div className="flex-1 space-y-4">
                   <div>
                     <h1 className="text-4xl font-bold mb-2 text-white">
-                      {game.title}
+                      {pageTitle}
                     </h1>
                     <p className="text-xl text-white opacity-90">
                       {game.shortDescription || game.description}
@@ -337,7 +403,7 @@ export default async function GameDetailPage({ params }: GamePageProps) {
               <div className="container mx-auto px-4">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Play {game.title}</CardTitle>
+                    <CardTitle>Play {pageTitle}</CardTitle>
                     <CardDescription>
                       Enjoy playing directly in your browser
                     </CardDescription>
@@ -353,6 +419,7 @@ export default async function GameDetailPage({ params }: GamePageProps) {
 
       case "screenshotGallery":
         if (game.images.length <= 1) return null;
+        const maxImages = sectionConfig.maxImages || 5;
         return (
           <div key="screenshotGallery" className="py-8 bg-muted/30">
             <div className="container mx-auto px-4">
@@ -363,7 +430,7 @@ export default async function GameDetailPage({ params }: GamePageProps) {
                 <CardContent>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                     {game.images
-                      .slice(1, sectionConfig.maxImages || 5)
+                      .slice(1, maxImages + 1)
                       .map((image, index) => (
                         <div
                           key={index}
@@ -386,27 +453,31 @@ export default async function GameDetailPage({ params }: GamePageProps) {
         );
 
       case "commentSection":
+        const maxComments = Number(sectionConfig.maxComments) || 10;
+        const commentTitle = sectionConfig.title || "Player Comments";
         return (
           <div key="commentSection" className="py-8">
             <div className="container mx-auto px-4">
               <GameComments
                 comments={game.comments || []}
                 enabled={sectionConfig.enabled}
-                title={sectionConfig.title || "Player Comments"}
-                maxComments={Number(sectionConfig.maxComments) || 10}
+                title={commentTitle}
+                maxComments={maxComments}
               />
             </div>
           </div>
         );
 
       case "relatedGames":
+        const maxItems = sectionConfig.maxItems || 4;
+        const relatedTitle = sectionConfig.title || "Similar Games";
         return (
           <div key="relatedGames" className="py-8 md:py-16 bg-muted/30">
             <div className="container mx-auto px-4">
               {/* 移动端：紧凑的标题 */}
               <div className="text-center mb-6 md:mb-12">
                 <h2 className="text-xl md:text-3xl font-bold mb-2 md:mb-4">
-                  {sectionConfig.title || "Similar Games"}
+                  {relatedTitle}
                 </h2>
                 <p className="text-muted-foreground text-sm md:text-base max-w-2xl mx-auto">
                   Discover more exciting games in the {category?.name || "same"}{" "}
@@ -417,7 +488,7 @@ export default async function GameDetailPage({ params }: GamePageProps) {
               {/* 直接使用grid布局，避免组件冲突 */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
                 {recommendedGames
-                  .slice(0, sectionConfig.maxItems || 4)
+                  .slice(0, maxItems)
                   .map((game, index) => (
                     <div key={game.slug} className="w-full">
                       <GameCard
@@ -497,7 +568,7 @@ export default async function GameDetailPage({ params }: GamePageProps) {
                     </>
                   )}
                   <BreadcrumbItem>
-                    <BreadcrumbPage>{game.title}</BreadcrumbPage>
+                    <BreadcrumbPage>{pageTitle}</BreadcrumbPage>
                   </BreadcrumbItem>
                 </BreadcrumbList>
               </Breadcrumb>
