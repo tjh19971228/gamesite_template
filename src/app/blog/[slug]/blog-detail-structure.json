@@ -33,9 +33,7 @@
     },
     "authorBio": {
       "enabled": true,
-      "order": 4,
-      "showFollowButton": true,
-      "showProfileButton": true
+      "order": 4
     },
     "sharing": {
       "enabled": true,
